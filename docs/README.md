@@ -628,25 +628,25 @@ Este projeto está licenciado sob a licença MIT, uma das mais permissivas do mu
 <table align="center">
 <tr>
 <td align="center">
-<a href="https://github.com/seu-usuario/whats-hub/stargazers">
+<a href="https://github.com/Lucasmagista/whats-hub---github/stargazers">
 <img src="https://img.shields.io/github/stars/seu-usuario/whats-hub?style=for-the-badge&logo=github&logoColor=white&color=yellow" alt="GitHub stars">
 </a>
 <br><sub>⭐ <strong>Star no GitHub</strong></sub>
 </td>
 <td align="center">
-<a href="https://github.com/seu-usuario/whats-hub/network/members">
+<a href="https://github.com/Lucasmagista/whats-hub---github/network/members">
 <img src="https://img.shields.io/github/forks/seu-usuario/whats-hub?style=for-the-badge&logo=github&logoColor=white&color=blue" alt="GitHub forks">
 </a>
 <br><sub>🍴 <strong>Fork o Projeto</strong></sub>
 </td>
 <td align="center">
-<a href="https://github.com/seu-usuario/whats-hub/issues">
+<a href="https://github.com/Lucasmagista/whats-hub---github/issues">
 <img src="https://img.shields.io/github/issues/seu-usuario/whats-hub?style=for-the-badge&logo=github&logoColor=white&color=red" alt="GitHub issues">
 </a>
 <br><sub>🐛 <strong>Reporte Issues</strong></sub>
 </td>
 <td align="center">
-<a href="https://github.com/seu-usuario/whats-hub/pulls">
+<a href="https://github.com/Lucasmagista/whats-hub---github/pulls">
 <img src="https://img.shields.io/github/issues-pr/seu-usuario/whats-hub?style=for-the-badge&logo=github&logoColor=white&color=green" alt="GitHub PRs">
 </a>
 <br><sub>🔄 <strong>Contribua</strong></sub>
