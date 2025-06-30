@@ -1,0 +1,42 @@
+{
+  "name": "whatsapp-webjs-n8n-server",
+  "version": "1.0.0",
+  "description": "Servidor WhatsApp Web.js para integração com n8n",
+  "main": "whatsapp-webjs-server.js",
+  "scripts": {
+    "start": "node whatsapp-webjs-server.js",
+    "dev": "nodemon whatsapp-webjs-server.js",
+    "install-deps": "npm install",
+    "docker-build": "docker build -t whatsapp-webjs-server .",
+    "docker-run": "docker run -p 3001:3001 -e N8N_WEBHOOK_URL=$N8N_WEBHOOK_URL whatsapp-webjs-server"
+  },
+  "keywords": [
+    "whatsapp",
+    "webjs",
+    "n8n",
+    "chatbot",
+    "automation"
+  ],
+  "author": "Seu Nome",
+  "license": "MIT",
+  "dependencies": {
+    "whatsapp-web.js": "^1.23.0",
+    "express": "^4.18.2",
+    "qrcode": "^1.5.3",
+    "axios": "^1.6.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/seu-usuario/whatsapp-webjs-n8n"
+  },
+  "bugs": {
+    "url": "https://github.com/seu-usuario/whatsapp-webjs-n8n/issues"
+  },
+  "homepage": "https://github.com/seu-usuario/whatsapp-webjs-n8n#readme"
+}

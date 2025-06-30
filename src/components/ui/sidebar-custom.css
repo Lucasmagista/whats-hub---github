@@ -1,0 +1,179 @@
+/* Melhorias visuais para a sidebar moderna */
+
+/* ========== VARIÁVEIS CUSTOMIZADAS PARA SIDEBAR ========== */
+.sidebar-custom-vars {
+  --sidebar-width: 16rem;
+  --sidebar-width-mobile: 18rem;
+  --sidebar-width-icon: 3rem;
+  
+  /* Melhorar as cores da sidebar */
+  --sidebar-bg-glass: rgba(15, 23, 42, 0.95);
+  --sidebar-border-glass: rgba(148, 163, 184, 0.1);
+  --sidebar-accent-glass: rgba(37, 211, 102, 0.1);
+  --sidebar-hover-glass: rgba(255, 255, 255, 0.05);
+}
+
+/* ========== GLASS EFFECT PARA SIDEBAR ========== */
+.sidebar-glass {
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+  background: var(--sidebar-bg-glass);
+  border-right: 1px solid var(--sidebar-border-glass);
+  box-shadow: 
+    4px 0 24px rgba(0, 0, 0, 0.1),
+    inset -1px 0 0 rgba(255, 255, 255, 0.05);
+}
+
+/* ========== MELHORIAS DE HOVER E FOCUS ========== */
+[data-sidebar="sidebar"] .group[data-state="collapsed"] .peer {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Efeito hover melhorado para items da sidebar */
+[data-sidebar="sidebar"] [data-sidebar="menu-button"]:hover {
+  background: var(--sidebar-hover-glass);
+  transform: translateX(4px);
+  transition: all 0.2s ease;
+}
+
+/* Estado ativo melhorado */
+[data-sidebar="sidebar"] [data-sidebar="menu-button"][data-active="true"] {
+  background: var(--sidebar-accent-glass);
+  border-right: 3px solid hsl(var(--sidebar-primary));
+  font-weight: 600;
+}
+
+/* ========== ANIMAÇÕES SUAVES ========== */
+@keyframes slideInSidebar {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+[data-sidebar="sidebar"] [data-sidebar="group"] {
+  animation: slideInSidebar 0.3s ease-out;
+}
+
+/* ========== BADGES MELHORADOS ========== */
+[data-sidebar="sidebar"] .sidebar-menu-badge {
+  background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary)/0.8));
+  color: white;
+  font-weight: 600;
+  animation: pulse 2s infinite;
+}
+
+/* ========== FOOTER ESPECIAL ========== */
+[data-sidebar="sidebar"] [data-sidebar="footer"] {
+  border-top: 1px solid var(--sidebar-border-glass);
+  background: rgba(0, 0, 0, 0.1);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+/* ========== DROPDOWN MELHORADO ========== */
+.sidebar-dropdown-content {
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+/* ========== INDICATOR PULSO ========== */
+.status-indicator-pulse {
+  animation: statusPulse 2s infinite;
+}
+
+@keyframes statusPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+}
+
+/* ========== SCROLLBAR CUSTOMIZADA PARA SIDEBAR ========== */
+[data-sidebar="sidebar"] .scrollbar-custom::-webkit-scrollbar {
+  width: 6px;
+}
+
+[data-sidebar="sidebar"] .scrollbar-custom::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+[data-sidebar="sidebar"] .scrollbar-custom::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.3);
+  border-radius: 3px;
+}
+
+[data-sidebar="sidebar"] .scrollbar-custom::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.5);
+}
+
+/* ========== RESPONSIVE MELHORADO ========== */
+@media (max-width: 768px) {
+  .sidebar-custom-vars {
+    --sidebar-width-mobile: 20rem;
+  }
+}
+
+/* ========== TRIGGER BUTTON MELHORADO ========== */
+[data-sidebar="trigger"] {
+  background: var(--sidebar-hover-glass);
+  border: 1px solid var(--sidebar-border-glass);
+  backdrop-filter: blur(10px);
+  transition: all 0.2s ease;
+}
+
+[data-sidebar="trigger"]:hover {
+  background: var(--sidebar-accent-glass);
+  transform: scale(1.05);
+}
+
+/* ========== BREADCRUMB MELHORADO ========== */
+.breadcrumb-custom {
+  backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+/* ========== SEPARADORES ELEGANTES ========== */
+[data-sidebar="separator"] {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(148, 163, 184, 0.3),
+    transparent
+  );
+  height: 1px;
+  margin: 12px 0;
+}
+
+/* ========== LOGO CONTAINER MELHORADO ========== */
+.sidebar-logo-container {
+  background: linear-gradient(135deg, 
+    hsl(var(--sidebar-primary)), 
+    hsl(var(--sidebar-primary)/0.8)
+  );
+  box-shadow: 
+    0 4px 12px rgba(37, 211, 102, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.sidebar-logo-container:hover {
+  transform: scale(1.05);
+  box-shadow: 
+    0 6px 16px rgba(37, 211, 102, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}

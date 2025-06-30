@@ -1,0 +1,1051 @@
+{
+"meta": {
+"instanceId": "whatsapp-webjs-chatbot-enhanced"
+},
+"nodes": [
+{
+"id": "webhook-whatsapp-trigger",
+"name": "🔗 Webhook WhatsApp Web.js",
+"type": "n8n-nodes-base.webhook",
+"position": [220, 300],
+"webhookId": "whatsapp-webjs-messages",
+"parameters": {
+"httpMethod": "POST",
+"path": "whatsapp-messages",
+"responseMode": "responseNode",
+"options": {}
+},
+"typeVersion": 1.1
+},
+{
+"id": "a35ac268-eff0-46cd-ac4e-c9b047a3f893",
+"name": "Obter URL do Áudio",
+"type": "n8n-nodes-base.whatsApp",
+"position": [
+1020,
+-160
+],
+"parameters": {
+"resource": "media",
+"operation": "mediaUrlGet",
+"mediaGetId": "={{ $json.audio.id }}",
+"requestOptions": {}
+},
+"credentials": {
+"whatsAppApi": {
+"id": "9SFJPeqrpChOkAmw",
+"name": "Conta WhatsApp"
+}
+},
+"typeVersion": 1
+},
+{
+"id": "a3be543c-949c-4443-bf82-e0d00419ae23",
+"name": "Obter URL do Vídeo",
+"type": "n8n-nodes-base.whatsApp",
+"position": [
+1020,
+200
+],
+"parameters": {
+"resource": "media",
+"operation": "mediaUrlGet",
+"mediaGetId": "={{ $json.video.id }}",
+"requestOptions": {}
+},
+"credentials": {
+"whatsAppApi": {
+"id": "9SFJPeqrpChOkAmw",
+"name": "Conta WhatsApp"
+}
+},
+"typeVersion": 1
+},
+{
+"id": "dd3cd0e7-0d1e-40cf-8120-aba0d1646d6d",
+"name": "Obter URL da Imagem",
+"type": "n8n-nodes-base.whatsApp",
+"position": [
+1020,
+540
+],
+"parameters": {
+"resource": "media",
+"operation": "mediaUrlGet",
+"mediaGetId": "={{ $json.image.id }}",
+"requestOptions": {}
+},
+"credentials": {
+"whatsAppApi": {
+"id": "9SFJPeqrpChOkAmw",
+"name": "Conta WhatsApp"
+}
+},
+"typeVersion": 1
+},
+{
+"id": "a3505c93-2719-4a11-8813-39844fe0dd1a",
+"name": "Baixar Vídeo",
+"type": "n8n-nodes-base.httpRequest",
+"position": [
+1180,
+200
+],
+"parameters": {
+"url": "={{ $json.url }}",
+"options": {},
+"authentication": "predefinedCredentialType",
+"nodeCredentialType": "whatsAppApi"
+},
+"credentials": {
+"whatsAppApi": {
+"id": "9SFJPeqrpChOkAmw",
+"name": "Conta WhatsApp"
+}
+},
+"typeVersion": 4.2
+},
+{
+"id": "b22e3a7d-5fa1-4b8d-be08-b59f5bb5c417",
+"name": "Baixar Áudio",
+"type": "n8n-nodes-base.httpRequest",
+"position": [
+1180,
+-160
+],
+"parameters": {
+"url": "={{ $json.url }}",
+"options": {},
+"authentication": "predefinedCredentialType",
+"nodeCredentialType": "whatsAppApi"
+},
+"credentials": {
+"whatsAppApi": {
+"id": "9SFJPeqrpChOkAmw",
+"name": "Conta WhatsApp"
+}
+},
+"typeVersion": 4.2
+},
+{
+"id": "dcadbd30-598e-443b-a3a7-10d7f9210f49",
+"name": "Baixar Imagem",
+"type": "n8n-nodes-base.httpRequest",
+"position": [
+1180,
+540
+],
+"parameters": {
+"url": "={{ $json.url }}",
+"options": {},
+"authentication": "predefinedCredentialType",
+"nodeCredentialType": "whatsAppApi"
+},
+"credentials": {
+"whatsAppApi": {
+"id": "9SFJPeqrpChOkAmw",
+"name": "Conta WhatsApp"
+}
+},
+"typeVersion": 4.2
+},
+{
+"id": "d38b6f73-272e-4833-85fc-46ce0db91f6a",
+"name": "Memória Buffer de Janela",
+"type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+"position": [
+2380,
+560
+],
+"parameters": {
+"sessionKey": "=whatsapp-tutorial-{{ $json.from }}",
+"sessionIdType": "customKey"
+},
+"typeVersion": 1.2
+},
+{
+"id": "3459f96b-c0de-4514-9d53-53a9b40d534e",
+"name": "Obter Mensagem do Usuário",
+"type": "n8n-nodes-base.set",
+"position": [
+2080,
+380
+],
+"parameters": {
+"options": {},
+"assignments": {
+"assignments": [
+{
+"id": "d990cbd6-a408-4ec4-a889-41be698918d9",
+"name": "tipo_mensagem",
+"type": "string",
+"value": "={{ $('Separar Partes da Mensagem').item.json.type }}"
+},
+{
+"id": "23b785c3-f38e-4706-80b7-51f333bba3bd",
+"name": "texto_mensagem",
+"type": "string",
+"value": "={{ $json.text }}"
+},
+{
+"id": "6e83f9a7-cf75-4182-b2d2-3151e8af76b9",
+"name": "de",
+"type": "string",
+"value": "={{ $('Gatilho WhatsApp').item.json.messages[0].from }}"
+},
+{
+"id": "da4b602a-28ca-4b0d-a747-c3d3698c3731",
+"name": "legenda_mensagem",
+"type": "string",
+"value": "={{ $('Redirecionar Tipos de Mensagem').item.json.video && $('Redirecionar Tipos de Mensagem').item.json.video.caption || '' }}\n{{ $('Redirecionar Tipos de Mensagem').item.json.image && $('Redirecionar Tipos de Mensagem').item.json.image.caption || ''}}\n{{ $('Redirecionar Tipos de Mensagem').item.json.audio && $('Redirecionar Tipos de Mensagem').item.json.audio.caption || ''}}"
+}
+]
+}
+},
+"typeVersion": 3.4
+},
+{
+"id": "7a4c9905-37f0-4cfe-a928-91c7e38914b9",
+"name": "Separar Partes da Mensagem",
+"type": "n8n-nodes-base.splitOut",
+"position": [
+460,
+300
+],
+"parameters": {
+"options": {},
+"fieldToSplitOut": "messages"
+},
+"typeVersion": 1
+},
+{
+"id": "f2ecc9a9-bdd9-475d-be0c-43594d0cb613",
+"name": "Wikipédia",
+"type": "@n8n/n8n-nodes-langchain.toolWikipedia",
+"position": [
+2500,
+560
+],
+"parameters": {},
+"typeVersion": 1
+},
+{
+"id": "325dac6d-6698-41e0-8d2f-9ac5d84c245e",
+"name": "Redirecionar Tipos de Mensagem",
+"type": "n8n-nodes-base.switch",
+"position": [
+740,
+380
+],
+"parameters": {
+"rules": {
+"values": [
+{
+"outputKey": "Mensagem de Áudio",
+"conditions": {
+"options": {
+"version": 2,
+"leftValue": "",
+"caseSensitive": true,
+"typeValidation": "strict"
+},
+"combinator": "and",
+"conditions": [
+{
+"operator": {
+"type": "boolean",
+"operation": "true",
+"singleValue": true
+},
+"leftValue": "={{ $json.type == 'audio' && Boolean($json.audio) }}",
+"rightValue": "audio"
+}
+]
+},
+"renameOutput": true
+},
+{
+"outputKey": "Mensagem de Vídeo",
+"conditions": {
+"options": {
+"version": 2,
+"leftValue": "",
+"caseSensitive": true,
+"typeValidation": "strict"
+},
+"combinator": "and",
+"conditions": [
+{
+"id": "82aa5ff4-c9b6-4187-a27e-c7c5d9bfdda0",
+"operator": {
+"type": "boolean",
+"operation": "true",
+"singleValue": true
+},
+"leftValue": "={{ $json.type == 'video' && Boolean($json.video) }}",
+"rightValue": ""
+}
+]
+},
+"renameOutput": true
+},
+{
+"outputKey": "Mensagem de Imagem",
+"conditions": {
+"options": {
+"version": 2,
+"leftValue": "",
+"caseSensitive": true,
+"typeValidation": "strict"
+},
+"combinator": "and",
+"conditions": [
+{
+"id": "05b30af4-967b-4824-abdc-84a8292ac0e5",
+"operator": {
+"type": "boolean",
+"operation": "true",
+"singleValue": true
+},
+"leftValue": "={{ $json.type == 'image' && Boolean($json.image) }}",
+"rightValue": ""
+}
+]
+},
+"renameOutput": true
+}
+]
+},
+"options": {
+"fallbackOutput": "extra",
+"renameFallbackOutput": "Mensagem de Texto"
+}
+},
+"typeVersion": 3.2
+},
+{
+"id": "b25c7d65-b9ea-4f90-8516-1747130501b2",
+"name": "Nota Adesiva",
+"type": "n8n-nodes-base.stickyNote",
+"position": [
+220,
+20
+],
+"parameters": {
+"color": 7,
+"width": 335.8011507479863,
+"height": 245.72612197928734,
+"content": "## 1. Gatilho WhatsApp\n[Saiba mais sobre o Gatilho WhatsApp](https://docs.n8n.io/integrations/builtin/trigger-nodes/n8n-nodes-base.whatsapptrigger)\n\nPara começar a receber mensagens do WhatsApp em seu fluxo de trabalho, há várias etapas envolvidas, então certifique-se de seguir a documentação do n8n. Quando recebermos mensagens do WhatsApp, vamos separar as partes das mensagens do payload e tratá-las dependendo do tipo de mensagem usando o nó Switch."
+},
+"typeVersion": 1
+},
+{
+"id": "0d3d721e-fefc-4b50-abe1-0dd504c962ff",
+"name": "Nota Adesiva1",
+"type": "n8n-nodes-base.stickyNote",
+"position": [
+1020,
+-280
+],
+"parameters": {
+"color": 7,
+"width": 356.65822784810103,
+"height": 97.23360184119679,
+"content": "### 2. Transcrever Mensagens de Áudio 💬\nPara mensagens de áudio ou notas de voz, podemos usar o GPT4o para transcrever a mensagem para nosso Agente de IA."
+},
+"typeVersion": 1
+},
+{
+"id": "59de051e-f0d4-4c07-9680-03923ab81f57",
+"name": "Nota Adesiva2",
+"type": "n8n-nodes-base.stickyNote",
+"position": [
+1020,
+40
+],
+"parameters": {
+"color": 7,
+"width": 492.5258918296896,
+"height": 127.13555811277331,
+"content": "### 3. Descrever Mensagens de Vídeo 🎬\nPara mensagens de vídeo, uma abordagem é usar um Modelo Multimodal que suporte análise de vídeo. Atualmente, o Google Gemini é um serviço bem testado para esta tarefa. Precisaremos usar o nó de requisição HTTP, pois atualmente o nó LLM do n8n não suporta tipos binários de vídeo."
+},
+"typeVersion": 1
+},
+{
+"id": "e2ca780f-01c0-4a5f-9f0a-e15575d0b803",
+"name": "Nota Adesiva3",
+"type": "n8n-nodes-base.stickyNote",
+"position": [
+1020,
+420
+],
+"parameters": {
+"color": 7,
+"width": 356.65822784810103,
+"height": 97.23360184119679,
+"content": "### 4. Analisar Mensagens de Imagem 🏞️\nPara mensagens de imagem, podemos usar o GPT4o para explicar o que está acontecendo na mensagem para nosso Agente de IA."
+},
+"typeVersion": 1
+},
+{
+"id": "6eea3c0f-4501-4355-b3b7-b752c93d5c48",
+"name": "Nota Adesiva4",
+"type": "n8n-nodes-base.stickyNote",
+"position": [
+1020,
+720
+],
+"parameters": {
+"color": 7,
+"width": 428.24395857307246,
+"height": 97.23360184119679,
+"content": "### 5. Resumidor de texto 📘\nPara mensagens de texto, não precisamos fazer muita transformação, mas é bom resumir para facilitar o entendimento."
+},
+"typeVersion": 1
+},
+{
+"id": "925a3871-9cdb-49f9-a2b9-890617d09965",
+"name": "Obter Texto",
+"type": "n8n-nodes-base.wait",
+"position": [
+1020,
+840
+],
+"webhookId": "99b49c83-d956-46d2-b8d3-d65622121ad9",
+"parameters": {
+"amount": 0
+},
+"typeVersion": 1.1
+},
+{
+"id": "9225a6b9-322a-4a33-86af-6586fcf246b9",
+"name": "Nota Adesiva5",
+"type": "n8n-nodes-base.stickyNote",
+"position": [
+2280,
+60
+],
+"parameters": {
+"color": 7,
+"width": 500.7797468354428,
+"height": 273.14522439585744,
+"content": "## 6. Gerar Resposta com Agente de IA\n[Leia mais sobre o nó Agente de IA](https://docs.n8n.io/integrations/builtin/cluster-nodes/root-nodes/n8n-nodes-langchain.agent)\n\nAgora que conseguimos lidar com todos os tipos de mensagem do WhatsApp, podemos fazer praticamente qualquer coisa com elas dando ao nosso agente de IA. Exemplos podem incluir atendimento ao cliente, ajudar a agendar compromissos ou verificar documentos.\n\nNesta demonstração, vamos apenas criar um Agente de IA simples que responde à mensagem do usuário do WhatsApp e retorna uma resposta simples."
+},
+"typeVersion": 1
+},
+{
+"id": "5a863e5d-e7fb-4e89-851b-e0936f5937e7",
+"name": "Nota Adesiva6",
+"type": "n8n-nodes-base.stickyNote",
+"position": [
+2740,
+660
+],
+"parameters": {
+"color": 7,
+"width": 384.12151898734186,
+"height": 211.45776754890682,
+"content": "## 7. Responder ao Usuário do WhatsApp\n[Leia mais sobre o nó Whatsapp](https://docs.n8n.io/integrations/builtin/app-nodes/n8n-nodes-base.whatsapp/)\n\nPara encerrar esta demonstração, vamos simplesmente enviar uma mensagem de texto simples de volta para o usuário. Note que este nó WhatsApp também permite enviar imagens, áudio, vídeos, documentos e também localização!"
+},
+"typeVersion": 1
+},
+{
+"id": "89df6f6c-2d91-4c14-a51a-4be29b1018ec",
+"name": "Responder ao Usuário",
+"type": "n8n-nodes-base.whatsApp",
+"position": [
+2740,
+480
+],
+"parameters": {
+"textBody": "={{ $json.output }}",
+"operation": "send",
+"phoneNumberId": "477115632141067",
+"requestOptions": {},
+"additionalFields": {},
+"recipientPhoneNumber": "={{ $('Gatilho WhatsApp').item.json.messages[0].from }}"
+},
+"credentials": {
+"whatsAppApi": {
+"id": "9SFJPeqrpChOkAmw",
+"name": "Conta WhatsApp"
+}
+},
+"typeVersion": 1
+},
+{
+"id": "67709b9e-a9b3-456b-9e68-71720b0cd75e",
+"name": "Nota Adesiva7",
+"type": "n8n-nodes-base.stickyNote",
+"position": [
+-340,
+-140
+],
+"parameters": {
+"width": 470.66513233601853,
+"height": 562.8608514850005,
+"content": "## Experimente!\n\n### Este template do n8n demonstra o início da construção do seu próprio chatbot WhatsApp com n8n! Por baixo dos panos, utilize os recursos poderosos de IA do n8n para lidar com diferentes tipos de mensagem e use um agente de IA para responder ao usuário. Uma ferramenta poderosa para qualquer caso de uso!\n\n* O Gatilho WhatsApp de entrada fornece uma maneira de obter mensagens no fluxo de trabalho.\n* A mensagem recebida é extraída e enviada através de 1 de 4 ramificações para processamento.\n* Cada ramificação de processamento usa IA para analisar, resumir ou transcrever a mensagem para que o agente de IA possa entendê-la.\n* O Agente de IA é usado para gerar uma resposta geral e usa uma ferramenta wikipedia para consultas mais complexas.\n* Finalmente, a mensagem de resposta é enviada de volta para o usuário do WhatsApp usando o nó WhatsApp.\n\n### Precisa de Ajuda?\nJunte-se ao [Discord](https://discord.com/invite/XPKeKXeB7d) ou pergunte no [Fórum](https://community.n8n.io/)!"
+},
+"typeVersion": 1
+},
+{
+"id": "10ae1f60-c025-4b63-8e02-4e6353bb67dc",
+"name": "Nota Adesiva8",
+"type": "n8n-nodes-base.stickyNote",
+"position": [
+-340,
+440
+],
+"parameters": {
+"color": 5,
+"width": 473.28063885246377,
+"height": 96.0144533433243,
+"content": "### Ative o fluxo de trabalho para usar!\nVocê deve ativar o fluxo de trabalho para usar este Chatbot do WhatsApp. Se estiver hospedando por conta própria, certifique-se de que o WhatsApp consegue se conectar ao seu servidor."
+},
+"typeVersion": 1
+},
+{
+"id": "2f0fd658-a138-4f50-95a7-7ddc4eb90fab",
+"name": "Explicador de Imagem",
+"type": "@n8n/n8n-nodes-langchain.chainLlm",
+"position": [
+1700,
+540
+],
+"parameters": {
+"text": "Aqui está uma imagem enviada pelo usuário. Descreva a imagem e transcreva qualquer texto visível na imagem.",
+"messages": {
+"messageValues": [
+{
+"type": "HumanMessagePromptTemplate",
+"messageType": "imageBinary"
+}
+]
+},
+"promptType": "define"
+},
+"typeVersion": 1.4
+},
+{
+"id": "d969ce8b-d6c4-4918-985e-3420557ef707",
+"name": "Formatar Resposta",
+"type": "n8n-nodes-base.set",
+"position": [
+1860,
+200
+],
+"parameters": {
+"options": {},
+"assignments": {
+"assignments": [
+{
+"id": "2ec0e573-373b-4692-bfae-86b6d3b9aa9a",
+"name": "texto",
+"type": "string",
+"value": "={{ $json.candidates[0].content.parts[0].text }}"
+}
+]
+}
+},
+"typeVersion": 3.4
+},
+{
+"id": "b67c9c4e-e13f-4ee4-bf01-3fd9055a91be",
+"name": "Nota Adesiva9",
+"type": "n8n-nodes-base.stickyNote",
+"position": [
+1540,
+180
+],
+"parameters": {
+"width": 260,
+"height": 305.35604142692785,
+"content": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n### 🚨 Google Gemini Obrigatório!\nNão está usando Gemini? Sinta-se à vontade para trocar por qualquer Modelo Multimodal que suporte Vídeo."
+},
+"typeVersion": 1
+},
+{
+"id": "8dd972be-305b-4d26-aa05-1dee17411d8a",
+"name": "Modelo de Chat Google Gemini",
+"type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+"position": [
+2240,
+560
+],
+"parameters": {
+"options": {},
+"modelName": "models/gemini-1.5-pro-002"
+},
+"credentials": {
+"googlePalmApi": {
+"id": "dSxo6ns5wn658r8N",
+"name": "Conta Google Gemini(PaLM) Api"
+}
+},
+"typeVersion": 1
+},
+{
+"id": "00a883a6-7688-4e82-926b-c5ba680378b7",
+"name": "Nota Adesiva10",
+"type": "n8n-nodes-base.stickyNote",
+"position": [
+1540,
+-180
+],
+"parameters": {
+"width": 260,
+"height": 294.22048331415436,
+"content": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n### 🚨 Google Gemini Obrigatório!\nNão está usando Gemini? Sinta-se à vontade para trocar por qualquer Modelo Multimodal que suporte Áudio."
+},
+"typeVersion": 1
+},
+{
+"id": "d0c7c2f6-b626-4ec5-86ff-96523749db2c",
+"name": "Google Gemini Áudio",
+"type": "n8n-nodes-base.httpRequest",
+"position": [
+1620,
+-160
+],
+"parameters": {
+"url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-002:generateContent",
+"method": "POST",
+"options": {},
+"jsonBody": "={{\n{\n \"contents\": [{\n \"parts\":[\n {\"text\": \"Transcreva este áudio\"},\n {\"inlineData\": {\n \"mimeType\": `audio/${$binary.data.fileExtension}`,\n \"data\": $input.item.binary.data.data }\n }\n ]\n }]\n}\n}}",
+"sendBody": true,
+"sendHeaders": true,
+"specifyBody": "json",
+"authentication": "predefinedCredentialType",
+"headerParameters": {
+"parameters": [
+{
+"name": "Content-Type",
+"value": "application/json"
+}
+]
+},
+"nodeCredentialType": "googlePalmApi"
+},
+"credentials": {
+"googlePalmApi": {
+"id": "dSxo6ns5wn658r8N",
+"name": "Conta Google Gemini(PaLM) Api"
+}
+},
+"typeVersion": 4.2
+},
+{
+"id": "27261815-f949-48e8-920d-7bf880ea87ce",
+"name": "Google Gemini Vídeo",
+"type": "n8n-nodes-base.httpRequest",
+"position": [
+1620,
+200
+],
+"parameters": {
+"url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-002:generateContent",
+"method": "POST",
+"options": {},
+"jsonBody": "={{\n{\n \"contents\": [{\n \"parts\":[\n {\"text\": \"Descreva este vídeo\"},\n {\"inlineData\": {\n \"mimeType\": `video/${$binary.data.fileExtension}`,\n \"data\": $input.item.binary.data.data }\n }\n ]\n }]\n}\n}}",
+"sendBody": true,
+"sendHeaders": true,
+"specifyBody": "json",
+"authentication": "predefinedCredentialType",
+"headerParameters": {
+"parameters": [
+{
+"name": "Content-Type",
+"value": "application/json"
+}
+]
+},
+"nodeCredentialType": "googlePalmApi"
+},
+"credentials": {
+"googlePalmApi": {
+"id": "dSxo6ns5wn658r8N",
+"name": "Conta Google Gemini(PaLM) Api"
+}
+},
+"typeVersion": 4.2
+},
+{
+"id": "7e28786b-ab19-4969-9915-2432a25b49d3",
+"name": "Modelo de Chat Google Gemini1",
+"type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+"position": [
+1680,
+680
+],
+"parameters": {
+"options": {},
+"modelName": "models/gemini-1.5-pro-002"
+},
+"credentials": {
+"googlePalmApi": {
+"id": "dSxo6ns5wn658r8N",
+"name": "Conta Google Gemini(PaLM) Api"
+}
+},
+"typeVersion": 1
+},
+{
+"id": "8832dac3-9433-4dcc-a805-346408042bf2",
+"name": "Modelo de Chat Google Gemini2",
+"type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+"position": [
+1680,
+980
+],
+"parameters": {
+"options": {},
+"modelName": "models/gemini-1.5-pro-002"
+},
+"credentials": {
+"googlePalmApi": {
+"id": "dSxo6ns5wn658r8N",
+"name": "Conta Google Gemini(PaLM) Api"
+}
+},
+"typeVersion": 1
+},
+{
+"id": "73d0af9e-d009-4859-b60d-48a2fbeda932",
+"name": "Formatar Resposta1",
+"type": "n8n-nodes-base.set",
+"position": [
+1860,
+-160
+],
+"parameters": {
+"options": {},
+"assignments": {
+"assignments": [
+{
+"id": "2ec0e573-373b-4692-bfae-86b6d3b9aa9a",
+"name": "texto",
+"type": "string",
+"value": "={{ $json.candidates[0].content.parts[0].text }}"
+}
+]
+}
+},
+"typeVersion": 3.4
+},
+{
+"id": "2ad0e104-0924-47ef-ad11-d84351d72083",
+"name": "Resumidor de Texto",
+"type": "@n8n/n8n-nodes-langchain.chainLlm",
+"position": [
+1700,
+840
+],
+"parameters": {
+"text": "={{ $json.text.body || $json.text }}",
+"messages": {
+"messageValues": [
+{
+"message": "Resuma a mensagem do usuário de forma sucinta."
+}
+]
+},
+"promptType": "define"
+},
+"typeVersion": 1.4
+},
+{
+"id": "85eaad3a-c4d1-4ae7-a37b-0b72be39409d",
+"name": "Agente de IA",
+"type": "@n8n/n8n-nodes-langchain.agent",
+"position": [
+2280,
+380
+],
+"parameters": {
+"text": "=O usuário enviou a seguinte mensagem\ntipo de mensagem: {{ $json.tipo_mensagem }}\ntexto ou descrição da mensagem:\n```{{ $json.texto_mensagem }}```\n{{ $json.legenda_mensagem ? `legenda da mensagem: ${$json.legenda_mensagem.trim()}` : '' }}",
+"options": {
+"systemMessage": "Você é um assistente de conhecimento geral disponibilizado ao público via whatsapp. Ajude a responder a consulta do usuário de forma sucinta e factual."
+},
+"promptType": "define"
+},
+"typeVersion": 1.6
+}
+],
+"pinData": {},
+"connections": {
+"Agente de IA": {
+"main": [
+[
+{
+"node": "Responder ao Usuário",
+"type": "main",
+"index": 0
+}
+]
+]
+},
+"Obter Texto": {
+"main": [
+[
+{
+"node": "Resumidor de Texto",
+"type": "main",
+"index": 0
+}
+]
+]
+},
+"Wikipédia": {
+"ai_tool": [
+[
+{
+"node": "Agente de IA",
+"type": "ai_tool",
+"index": 0
+}
+]
+]
+},
+"Obter URL do Áudio": {
+"main": [
+[
+{
+"node": "Baixar Áudio",
+"type": "main",
+"index": 0
+}
+]
+]
+},
+"Obter URL da Imagem": {
+"main": [
+[
+{
+"node": "Baixar Imagem",
+"type": "main",
+"index": 0
+}
+]
+]
+},
+"Obter URL do Vídeo": {
+"main": [
+[
+{
+"node": "Baixar Vídeo",
+"type": "main",
+"index": 0
+}
+]
+]
+},
+"Baixar Áudio": {
+"main": [
+[
+{
+"node": "Google Gemini Áudio",
+"type": "main",
+"index": 0
+}
+]
+]
+},
+"Baixar Imagem": {
+"main": [
+[
+{
+"node": "Explicador de Imagem",
+"type": "main",
+"index": 0
+}
+]
+]
+},
+"Baixar Vídeo": {
+"main": [
+[
+{
+"node": "Google Gemini Vídeo",
+"type": "main",
+"index": 0
+}
+]
+]
+},
+"Formatar Resposta": {
+"main": [
+[
+{
+"node": "Obter Mensagem do Usuário",
+"type": "main",
+"index": 0
+}
+]
+]
+},
+"Explicador de Imagem": {
+"main": [
+[
+{
+"node": "Obter Mensagem do Usuário",
+"type": "main",
+"index": 0
+}
+]
+]
+},
+"Resumidor de Texto": {
+"main": [
+[
+{
+"node": "Obter Mensagem do Usuário",
+"type": "main",
+"index": 0
+}
+]
+]
+},
+"Formatar Resposta1": {
+"main": [
+[
+{
+"node": "Obter Mensagem do Usuário",
+"type": "main",
+"index": 0
+}
+]
+]
+},
+"Gatilho WhatsApp": {
+"main": [
+[
+{
+"node": "Separar Partes da Mensagem",
+"type": "main",
+"index": 0
+}
+]
+]
+},
+"Obter Mensagem do Usuário": {
+"main": [
+[
+{
+"node": "Agente de IA",
+"type": "main",
+"index": 0
+}
+]
+]
+},
+"Google Gemini Áudio": {
+"main": [
+[
+{
+"node": "Formatar Resposta1",
+"type": "main",
+"index": 0
+}
+]
+]
+},
+"Google Gemini Vídeo": {
+"main": [
+[
+{
+"node": "Formatar Resposta",
+"type": "main",
+"index": 0
+}
+]
+]
+},
+"Memória Buffer de Janela": {
+"ai_memory": [
+[
+{
+"node": "Agente de IA",
+"type": "ai_memory",
+"index": 0
+}
+]
+]
+},
+"Redirecionar Tipos de Mensagem": {
+"main": [
+[
+{
+"node": "Obter URL do Áudio",
+"type": "main",
+"index": 0
+}
+],
+[
+{
+"node": "Obter URL do Vídeo",
+"type": "main",
+"index": 0
+}
+],
+[
+{
+"node": "Obter URL da Imagem",
+"type": "main",
+"index": 0
+}
+],
+[
+{
+"node": "Obter Texto",
+"type": "main",
+"index": 0
+}
+]
+]
+},
+"Separar Partes da Mensagem": {
+"main": [
+[
+{
+"node": "Redirecionar Tipos de Mensagem",
+"type": "main",
+"index": 0
+}
+]
+]
+},
+"Modelo de Chat Google Gemini": {
+"ai_languageModel": [
+[
+{
+"node": "Agente de IA",
+"type": "ai_languageModel",
+"index": 0
+}
+]
+]
+},
+"Modelo de Chat Google Gemini1": {
+"ai_languageModel": [
+[
+{
+"node": "Explicador de Imagem",
+"type": "ai_languageModel",
+"index": 0
+}
+]
+]
+},
+"Modelo de Chat Google Gemini2": {
+"ai_languageModel": [
+[
+{
+"node": "Resumidor de Texto",
+"type": "ai_languageModel",
+"index": 0
+}
+]
+]
+}
+}
+}

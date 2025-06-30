@@ -1,0 +1,294 @@
+/* Estilos para preview da logo personalizada */
+.logo-preview-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px;
+  background: linear-gradient(to bottom right, rgb(249 250 251), rgb(243 244 246));
+  border-radius: 8px;
+  min-height: 80px;
+}
+
+.dark .logo-preview-container {
+  background: linear-gradient(to bottom right, rgb(31 41 55), rgb(17 24 39));
+}
+
+.logo-preview-image {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: white;
+  object-fit: contain;
+  transition: all 0.3s ease;
+}
+
+.dark .logo-preview-image {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Tamanhos da logo */
+.logo-size-small {
+  width: 24px !important;
+  height: 24px !important;
+}
+
+.logo-size-medium {
+  width: 32px !important;
+  height: 32px !important;
+}
+
+.logo-size-large {
+  width: 48px !important;
+  height: 48px !important;
+}
+
+.logo-size-xlarge {
+  width: 64px !important;
+  height: 64px !important;
+}
+
+/* Estilos de objeto */
+.logo-style-contain {
+  object-fit: contain !important;
+}
+
+.logo-style-cover {
+  object-fit: cover !important;
+}
+
+.logo-style-fill {
+  object-fit: fill !important;
+}
+
+.logo-style-scale-down {
+  object-fit: scale-down !important;
+}
+
+/* Bordas arredondadas - valores dinâmicos */
+.logo-radius-0 { border-radius: 0px !important; }
+.logo-radius-1 { border-radius: 1px !important; }
+.logo-radius-2 { border-radius: 2px !important; }
+.logo-radius-3 { border-radius: 3px !important; }
+.logo-radius-4 { border-radius: 4px !important; }
+.logo-radius-5 { border-radius: 5px !important; }
+.logo-radius-6 { border-radius: 6px !important; }
+.logo-radius-7 { border-radius: 7px !important; }
+.logo-radius-8 { border-radius: 8px !important; }
+.logo-radius-9 { border-radius: 9px !important; }
+.logo-radius-10 { border-radius: 10px !important; }
+.logo-radius-11 { border-radius: 11px !important; }
+.logo-radius-12 { border-radius: 12px !important; }
+.logo-radius-13 { border-radius: 13px !important; }
+.logo-radius-14 { border-radius: 14px !important; }
+.logo-radius-15 { border-radius: 15px !important; }
+.logo-radius-16 { border-radius: 16px !important; }
+.logo-radius-17 { border-radius: 17px !important; }
+.logo-radius-18 { border-radius: 18px !important; }
+.logo-radius-19 { border-radius: 19px !important; }
+.logo-radius-20 { border-radius: 20px !important; }
+.logo-radius-21 { border-radius: 21px !important; }
+.logo-radius-22 { border-radius: 22px !important; }
+.logo-radius-23 { border-radius: 23px !important; }
+.logo-radius-24 { border-radius: 24px !important; }
+.logo-radius-25 { border-radius: 25px !important; }
+.logo-radius-26 { border-radius: 26px !important; }
+.logo-radius-27 { border-radius: 27px !important; }
+.logo-radius-28 { border-radius: 28px !important; }
+.logo-radius-29 { border-radius: 29px !important; }
+.logo-radius-30 { border-radius: 30px !important; }
+.logo-radius-31 { border-radius: 31px !important; }
+.logo-radius-32 { border-radius: 32px !important; }
+.logo-radius-33 { border-radius: 33px !important; }
+.logo-radius-34 { border-radius: 34px !important; }
+.logo-radius-35 { border-radius: 35px !important; }
+.logo-radius-36 { border-radius: 36px !important; }
+.logo-radius-37 { border-radius: 37px !important; }
+.logo-radius-38 { border-radius: 38px !important; }
+.logo-radius-39 { border-radius: 39px !important; }
+.logo-radius-40 { border-radius: 40px !important; }
+.logo-radius-41 { border-radius: 41px !important; }
+.logo-radius-42 { border-radius: 42px !important; }
+.logo-radius-43 { border-radius: 43px !important; }
+.logo-radius-44 { border-radius: 44px !important; }
+.logo-radius-45 { border-radius: 45px !important; }
+.logo-radius-46 { border-radius: 46px !important; }
+.logo-radius-47 { border-radius: 47px !important; }
+.logo-radius-48 { border-radius: 48px !important; }
+.logo-radius-49 { border-radius: 49px !important; }
+.logo-radius-50 { border-radius: 50px !important; }
+
+/* Sombras */
+.logo-shadow {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+.dark .logo-shadow {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Hover effects para galeria */
+.logo-gallery-item {
+  transition: all 0.2s ease;
+}
+
+.logo-gallery-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Estilos para temas predefinidos */
+.theme-color-preview {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.dark .theme-color-preview {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Estilos para preview da logo avançada */
+.logo-preview-advanced {
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  background: white;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: all 0.3s ease;
+}
+
+.dark .logo-preview-advanced {
+  border-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.logo-preview-small {
+  width: 32px;
+  height: 32px;
+}
+
+.logo-preview-medium {
+  width: 48px;
+  height: 48px;
+}
+
+.logo-preview-large {
+  width: 64px;
+  height: 64px;
+}
+
+.logo-preview-shadow {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dark .logo-preview-shadow {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Estilos para galeria de logos salvas */
+.saved-logo-item {
+  width: 100%;
+  height: 64px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.saved-logo-item:hover {
+  border-color: rgba(0, 0, 0, 0.3);
+  transform: scale(1.05);
+}
+
+.dark .saved-logo-item {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark .saved-logo-item:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Estilos para cores personalizadas */
+.color-input-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.color-swatch {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.color-swatch:hover {
+  border-color: rgba(0, 0, 0, 0.3);
+  transform: scale(1.05);
+}
+
+.dark .color-swatch {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark .color-swatch:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Animações para feedback visual */
+@keyframes pulse-success {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.upload-success {
+  animation: pulse-success 0.6s ease-in-out;
+}
+
+/* Estilos para validação visual */
+.validation-error {
+  border-color: rgb(239 68 68) !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
+}
+
+.validation-warning {
+  border-color: rgb(245 158 11) !important;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1) !important;
+}
+
+.validation-success {
+  border-color: rgb(34 197 94) !important;
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1) !important;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .logo-preview-container {
+    padding: 8px;
+    min-height: 60px;
+  }
+  
+  .logo-size-small {
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  .logo-size-medium {
+    width: 28px !important;
+    height: 28px !important;
+  }
+
+  .logo-size-large {
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  .logo-size-xlarge {
+    width: 56px !important;
+    height: 56px !important;
+  }
+}

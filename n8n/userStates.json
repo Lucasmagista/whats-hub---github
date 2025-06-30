@@ -1,0 +1,15 @@
+{
+  "120363403939630173@g.us": {
+    "step": "awaiting_name",
+    "data": {},
+    "lastInteraction": 1751232638186
+  },
+  "5517992785352": {
+    "step": "awaiting_main_option",
+    "data": {
+      "name": "Lucas Magista",
+      "firstName": "Lucas"
+    },
+    "lastInteraction": 1751249694367
+  }
+}

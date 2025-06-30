@@ -1,0 +1,57 @@
+{
+  "name": "whatsapp-webjs-n8n-server",
+  "version": "1.0.0",
+  "description": "Servidor WhatsApp Web.js para integração com n8n",
+  "main": "whatsapp-webjs-server-complete.js",
+  "scripts": {
+    "start": "node whatsapp-webjs-server-complete.js",
+    "start:advanced": "node whatsapp-webjs-server-advanced.js",
+    "start:simple": "node whatsapp-webjs-server.js",
+    "dev": "nodemon --config nodemon.json whatsapp-webjs-server-complete.js",
+    "dev:simple": "nodemon --config nodemon.json whatsapp-webjs-server.js",
+    "install-deps": "npm install",
+    "setup-postgres": "install-postgresql.bat",
+    "migrate": "node migrate-to-postgresql.js",
+    "db:init": "node scripts/db-init.js",
+    "db:reset": "node scripts/db-reset.js",
+    "db:backup": "node scripts/db-backup.js",
+    "docker-build": "docker build -t whatsapp-webjs-server .",
+    "docker-run": "docker run -p 3001:3001 -e N8N_WEBHOOK_URL=%N8N_WEBHOOK_URL% whatsapp-webjs-server"
+  },
+  "keywords": [
+    "whatsapp",
+    "webjs",
+    "n8n",
+    "chatbot",
+    "automation"
+  ],
+  "author": "Lucas",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.0",
+    "bcryptjs": "^3.0.2",
+    "crypt": "^0.0.2",
+    "dotenv": "^16.5.0",
+    "express": "^4.18.2",
+    "form-data": "^4.0.3",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.16.2",
+    "qrcode": "^1.5.3",
+    "qrcode-terminal": "^0.12.0",
+    "whatsapp-web.js": "^1.23.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/seu-usuario/whatsapp-webjs-n8n"
+  },
+  "bugs": {
+    "url": "https://github.com/seu-usuario/whatsapp-webjs-n8n/issues"
+  },
+  "homepage": "https://github.com/seu-usuario/whatsapp-webjs-n8n#readme"
+}

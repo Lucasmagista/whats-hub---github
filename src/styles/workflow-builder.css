@@ -1,0 +1,277 @@
+/* Estilos para o Workflow Builder */
+
+.grid-background {
+  background-image: 
+    linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Classes de utilidade para z-index */
+.z-\[1\] {
+  z-index: 1;
+}
+
+.z-\[2\] {
+  z-index: 2;
+}
+
+/* Altura mínima personalizada */
+.min-h-\[600px\] {
+  min-height: 600px;
+}
+
+/* Animações para conexões */
+.workflow-connection {
+  transition: stroke 0.2s ease-in-out;
+}
+
+.workflow-connection:hover {
+  stroke-width: 3px;
+}
+
+/* Animações para nós */
+.workflow-node {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.workflow-node:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.workflow-node.selected {
+  box-shadow: 0 0 0 2px rgb(147 51 234);
+}
+
+/* Estilos para ferramentas de conexão */
+.connection-handle {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #6b7280;
+  border: 2px solid #374151;
+  position: absolute;
+  cursor: crosshair;
+  transition: all 0.2s ease-in-out;
+}
+
+.connection-handle:hover {
+  background: #3b82f6;
+  border-color: #60a5fa;
+  transform: scale(1.2);
+}
+
+.connection-handle.success {
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #10b981;
+}
+
+.connection-handle.failure {
+  right: -6px;
+  bottom: 25%;
+  background: #ef4444;
+}
+
+.connection-handle.input {
+  left: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Tema escuro para canvas */
+.workflow-canvas {
+  background: radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.05) 0%, transparent 50%);
+}
+
+/* Tooltip para nós */
+.node-tooltip {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.workflow-node:hover .node-tooltip {
+  opacity: 1;
+}
+
+/* Estilos para mini-map */
+.workflow-minimap {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 200px;
+  height: 120px;
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  z-index: 10;
+}
+
+/* Animações de entrada */
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.workflow-node-enter {
+  animation: fadeInScale 0.3s ease-out;
+}
+
+/* Estilos para indicadores de status */
+.status-indicator {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid #1f2937;
+}
+
+.status-indicator.running {
+  background: #fbbf24;
+  animation: pulse 2s infinite;
+}
+
+.status-indicator.success {
+  background: #10b981;
+}
+
+.status-indicator.error {
+  background: #ef4444;
+}
+
+.status-indicator.pending {
+  background: #6b7280;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Estilos para debugging */
+.debug-mode .workflow-node {
+  border: 1px dashed #fbbf24 !important;
+}
+
+.debug-mode .workflow-connection {
+  stroke-dasharray: 5, 5;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .workflow-node {
+    width: 160px;
+  }
+  
+  .workflow-minimap {
+    width: 150px;
+    height: 90px;
+  }
+}
+
+/* Modo tela cheia */
+.fullscreen-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  background: #111827;
+}
+
+/* Controles de zoom */
+.zoom-controls {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 10;
+}
+
+.zoom-controls button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
+.zoom-controls button:hover {
+  background: rgba(59, 130, 246, 0.8);
+}
+
+/* Seleção múltipla */
+.selection-box {
+  position: absolute;
+  border: 2px dashed #3b82f6;
+  background: rgba(59, 130, 246, 0.1);
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Undo/Redo indicators */
+.history-indicator {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 6px;
+  color: white;
+  font-size: 12px;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.history-indicator.show {
+  opacity: 1;
+}
+
+/* Performance optimization classes */
+.gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+.no-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}

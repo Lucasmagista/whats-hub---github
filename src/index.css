@@ -1,0 +1,1215 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Modern WhatsApp Bot Dashboard - Dark Theme */
+
+@layer base {
+  :root {
+    /* Dark Theme by Default */
+    --background: 210 24% 8%; /* #0A0E13 Very Dark Blue */
+    --foreground: 210 20% 95%; /* #F1F2F6 Light Grey */
+
+    --card: 210 20% 12%; /* #151922 Dark Card */
+    --card-foreground: 210 20% 95%;
+
+    --popover: 210 20% 12%;
+    --popover-foreground: 210 20% 95%;
+
+    --primary: 142 76% 46%; /* #25D366 WhatsApp Green */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 158 64% 34%; /* #128C7E Dark Green */
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 210 20% 15%; /* #1C212A Dark Muted */
+    --muted-foreground: 210 10% 60%; /* #8B95A1 */
+
+    --accent: 200 18% 25%; /* #2C3E50 Dark Blue Grey */
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 210 20% 18%; /* #212832 */
+    --input: 210 20% 18%;
+    --ring: 142 76% 46%;
+
+    --radius: 1rem;
+
+    /* Modern Dark Theme Colors */
+    --whatsapp-green: 142 76% 46%; /* #25D366 */
+    --whatsapp-dark-green: 158 64% 34%; /* #128C7E */
+    --whatsapp-background: 210 24% 8%; /* #0A0E13 */
+    --whatsapp-chat-bg: 210 20% 10%; /* #0F1419 */
+    --whatsapp-text: 210 20% 95%; /* #F1F2F6 */
+    --whatsapp-accent: 200 18% 25%; /* #2C3E50 */
+    
+    /* Glass Effect Variables */
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-shadow: rgba(0, 0, 0, 0.3);
+    
+    /* Header Optimization Variables */
+    --header-height: 56px;
+    --header-padding: 8px;
+    --header-button-height: 32px;
+    --header-button-padding: 8px 12px;
+    --header-icon-size: 16px;
+    --header-font-size: 12px;
+    --header-gap: 6px;
+
+    /* Sidebar Variables */
+    --sidebar: 210 20% 12%; /* Dark Card similar to card */
+    --sidebar-foreground: 210 20% 95%; /* Light text */
+    --sidebar-primary: 142 76% 46%; /* WhatsApp Green */
+    --sidebar-primary-foreground: 0 0% 100%; /* White text */
+    --sidebar-accent: 210 20% 15%; /* Slightly lighter for hover */
+    --sidebar-accent-foreground: 210 20% 95%; /* Light text */
+    --sidebar-border: 210 20% 18%; /* Same as border */
+    --sidebar-ring: 142 76% 46%; /* WhatsApp Green */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    background: linear-gradient(135deg, hsl(var(--background)) 0%, hsl(210 20% 6%) 100%);
+    min-height: 100vh;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-muted/30;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-accent/50 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-accent/70;
+  }
+}
+
+@layer utilities {
+  /* ========== HEADER OPTIMIZATION STYLES - MELHORADO ========== */
+  
+  /* Security Lock Screen Styles */
+  .lock-screen-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    background: linear-gradient(135deg, hsl(210 24% 8%) 0%, hsl(258 20% 10%) 50%, hsl(210 24% 8%) 100%);
+  }
+  
+  .lock-screen-overlay {
+    backdrop-filter: blur(20px);
+    background: rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Modal and Dialog fixes */
+  .stable-modal-content {
+    contain: layout style paint;
+    will-change: auto;
+  }
+  
+  /* Layout fixes for dashboard elements */
+  .dashboard-container {
+    overflow: hidden;
+    height: 100vh;
+    max-height: 100vh;
+  }
+  
+  .dashboard-container * {
+    box-sizing: border-box;
+  }
+  
+  /* Glass effect improvements */
+  .glass-effect {
+    backdrop-filter: blur(12px);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 8px 32px var(--glass-shadow);
+  }
+  
+  /* Settings modal specific fixes */
+  .settings-modal-content {
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  
+  /* Animation delays for decorative elements */
+  .animation-delay-1s {
+    animation-delay: 1s;
+  }
+  
+  .animation-delay-2s {
+    animation-delay: 2s;
+  }
+  
+  .animation-delay-4s {
+    animation-delay: 4s;
+  }
+  
+  /* Header Container - Modernizado */
+  .header-compact {
+    height: var(--header-height) !important;
+    min-height: var(--header-height) !important;
+    padding: var(--header-padding) 16px !important;
+    background: linear-gradient(135deg, 
+      rgba(10, 14, 19, 0.95) 0%, 
+      rgba(21, 25, 34, 0.95) 50%,
+      rgba(15, 20, 25, 0.95) 100%) !important;
+    backdrop-filter: blur(20px) saturate(180%) !important;
+    border-bottom: 1px solid rgba(37, 211, 102, 0.2) !important;
+    box-shadow: 
+      0 4px 20px rgba(0, 0, 0, 0.4),
+      0 1px 0 rgba(37, 211, 102, 0.1) inset !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 50 !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
+
+  .header-compact:hover {
+    box-shadow: 
+      0 6px 30px rgba(0, 0, 0, 0.5),
+      0 1px 0 rgba(37, 211, 102, 0.2) inset !important;
+  }
+
+  /* Header Spacing - Melhorado */
+  .spacing-compact {
+    gap: var(--header-gap) !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+  }
+
+  .spacing-ultra-compact {
+    gap: calc(var(--header-gap) * 0.5) !important;
+    align-items: center !important;
+  }
+
+  /* Header Button Standardization - Modernizado */
+  .header-button {
+    height: var(--header-button-height) !important;
+    min-height: var(--header-button-height) !important;
+    padding: var(--header-button-padding) !important;
+    font-size: var(--header-font-size) !important;
+    line-height: 1.2 !important;
+    border-radius: 10px !important;
+    background: linear-gradient(135deg, 
+      rgba(255, 255, 255, 0.08) 0%, 
+      rgba(255, 255, 255, 0.04) 100%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    backdrop-filter: blur(8px) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    font-weight: 500 !important;
+    white-space: nowrap !important;
+    color: rgba(241, 242, 246, 0.9) !important;
+    position: relative !important;
+    overflow: hidden !important;
+  }
+
+  .header-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+      transparent, 
+      rgba(37, 211, 102, 0.1), 
+      transparent);
+    transition: left 0.6s ease !important;
+  }
+
+  .header-button:hover {
+    /* transform: translateY(-1px) scale(1.02) !important; - DISABLED to prevent modal jumping */
+    background: linear-gradient(135deg, 
+      rgba(37, 211, 102, 0.15) 0%, 
+      rgba(18, 140, 126, 0.1) 100%) !important;
+    border-color: rgba(37, 211, 102, 0.3) !important;
+    box-shadow: 
+      0 8px 25px rgba(37, 211, 102, 0.2),
+      0 4px 12px rgba(0, 0, 0, 0.3) !important;
+    color: rgba(37, 211, 102, 1) !important;
+  }
+
+  .header-button:hover::before {
+    left: 100% !important;
+  }
+
+  .header-button:active {
+    transform: translateY(0) scale(0.98) !important;
+  }
+
+  /* Header Icons - Melhorado */
+  .header-icon {
+    width: var(--header-icon-size) !important;
+    height: var(--header-icon-size) !important;
+    flex-shrink: 0 !important;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3)) !important;
+    transition: all 0.3s ease !important;
+  }
+
+  .header-button:hover .header-icon {
+    filter: drop-shadow(0 2px 4px rgba(37, 211, 102, 0.4)) !important;
+  }
+
+  .header-icon-mini {
+    width: 10px !important;
+    height: 10px !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Header Typography - Melhorado */
+  .text-header-compact {
+    font-size: 15px !important;
+    line-height: 1.3 !important;
+    font-weight: 600 !important;
+    background: linear-gradient(135deg, 
+      rgba(241, 242, 246, 1) 0%, 
+      rgba(241, 242, 246, 0.8) 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+  }
+
+  .text-ultra-compact {
+    font-size: 11px !important;
+    line-height: 1.2 !important;
+    font-weight: 400 !important;
+    color: rgba(139, 149, 161, 0.9) !important;
+  }
+
+  /* Tab Button Specific Styles - Melhorado */
+  .header-tab-button {
+    min-width: 70px !important;
+    justify-content: center !important;
+    position: relative !important;
+  }
+
+  .header-tab-button.active {
+    background: linear-gradient(135deg, 
+      rgba(37, 211, 102, 0.2) 0%, 
+      rgba(18, 140, 126, 0.15) 100%) !important;
+    border-color: rgba(37, 211, 102, 0.4) !important;
+    color: rgba(37, 211, 102, 1) !important;
+    box-shadow: 
+      0 4px 15px rgba(37, 211, 102, 0.3),
+      0 2px 8px rgba(0, 0, 0, 0.2) !important;
+  }
+
+  .header-tab-button.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 10%;
+    right: 10%;
+    height: 2px;
+    background: linear-gradient(90deg, 
+      transparent, 
+      rgba(37, 211, 102, 1), 
+      transparent) !important;
+    border-radius: 1px !important;
+  }
+
+  /* Navigation Badge - Melhorado */
+  .nav-badge {
+    font-size: 9px !important;
+    min-width: 16px !important;
+    height: 16px !important;
+    padding: 0 5px !important;
+    border-radius: 8px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: linear-gradient(135deg, 
+      rgba(37, 211, 102, 0.9) 0%, 
+      rgba(18, 140, 126, 0.8) 100%) !important;
+    color: white !important;
+    font-weight: 700 !important;
+    box-shadow: 
+      0 2px 8px rgba(37, 211, 102, 0.4),
+      0 1px 3px rgba(0, 0, 0, 0.2) !important;
+    animation: pulse 2s infinite !important;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+
+  /* Logo Section - Melhorado */
+  .header-logo-section {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    flex-shrink: 0 !important;
+    padding: 4px 8px !important;
+    border-radius: 12px !important;
+    background: linear-gradient(135deg, 
+      rgba(255, 255, 255, 0.05) 0%, 
+      rgba(255, 255, 255, 0.02) 100%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    transition: all 0.3s ease !important;
+  }
+
+  .header-logo-section:hover {
+    background: linear-gradient(135deg, 
+      rgba(37, 211, 102, 0.1) 0%, 
+      rgba(18, 140, 126, 0.05) 100%) !important;
+    border-color: rgba(37, 211, 102, 0.2) !important;
+    /* transform: translateY(-1px) !important; - DISABLED to prevent modal jumping */
+  }
+
+  .header-logo {
+    width: 36px !important;
+    height: 36px !important;
+    border-radius: 8px !important;
+    flex-shrink: 0 !important;
+    box-shadow: 
+      0 4px 12px rgba(37, 211, 102, 0.3),
+      0 1px 3px rgba(0, 0, 0, 0.2) !important;
+    border: 2px solid rgba(37, 211, 102, 0.3) !important;
+    transition: all 0.3s ease !important;
+  }
+
+  .header-logo:hover {
+    transform: scale(1.05) !important;
+    box-shadow: 
+      0 6px 20px rgba(37, 211, 102, 0.4),
+      0 2px 8px rgba(0, 0, 0, 0.3) !important;
+  }
+
+  .header-brand-info {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2px !important;
+    min-width: 0 !important;
+  }
+
+  /* Icon Container Standardization - Melhorado */
+  .icon-container {
+    width: 18px !important;
+    height: 18px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 6px !important;
+    position: relative !important;
+    background: linear-gradient(135deg, 
+      rgba(255, 255, 255, 0.1) 0%, 
+      rgba(255, 255, 255, 0.05) 100%) !important;
+    transition: all 0.3s ease !important;
+  }
+
+  .icon-container:hover {
+    background: linear-gradient(135deg, 
+      rgba(37, 211, 102, 0.2) 0%, 
+      rgba(18, 140, 126, 0.1) 100%) !important;
+    transform: scale(1.1) !important;
+  }
+
+  /* Responsividade Mobile - Melhorada */
+  @media (max-width: 768px) {
+    :root {
+      --header-height: 52px;
+      --header-button-height: 30px;
+      --header-button-padding: 6px 10px;
+      --header-icon-size: 15px;
+      --header-font-size: 11px;
+      --header-gap: 6px;
+    }
+    
+    .header-logo {
+      width: 32px !important;
+      height: 32px !important;
+    }
+    
+    .text-header-compact {
+      font-size: 13px !important;
+    }
+    
+    .header-logo-section {
+      gap: 8px !important;
+      padding: 3px 6px !important;
+    }
+    
+    .nav-badge {
+      font-size: 8px !important;
+      min-width: 14px !important;
+      height: 14px !important;
+    }
+  }
+
+  @media (max-width: 480px) {
+    :root {
+      --header-height: 48px;
+      --header-button-height: 28px;
+      --header-button-padding: 4px 8px;
+      --header-icon-size: 14px;
+      --header-font-size: 10px;
+      --header-gap: 4px;
+    }
+    
+    .header-compact {
+      padding: var(--header-padding) 12px !important;
+    }
+    
+    .header-logo {
+      width: 28px !important;
+      height: 28px !important;
+    }
+    
+    .text-header-compact {
+      font-size: 12px !important;
+    }
+  }
+}
+
+/* ========== EXISTING STYLES (UNCHANGED) ========== */
+  
+/* Modern Glass Effect */
+.glass-effect {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px var(--glass-shadow);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Modern Message Bubbles */
+.whatsapp-message-bubble {
+  @apply rounded-2xl px-6 py-4 max-w-[75%] break-words shadow-lg backdrop-blur-sm;
+  position: relative;
+}
+
+.whatsapp-message-sent {
+  background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(158 64% 34%) 100%);
+  @apply text-primary-foreground ml-auto;
+  box-shadow: 
+    0 4px 20px rgba(37, 211, 102, 0.3),
+    0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.whatsapp-message-received {
+  @apply bg-card/80 text-card-foreground mr-auto;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.2),
+    0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Modern Panel */
+.whatsapp-panel {
+  @apply glass-card;
+}
+
+/* Chat Background with Modern Pattern */
+.whatsapp-chat-bg {
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(37, 211, 102, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(18, 140, 126, 0.03) 0%, transparent 50%),
+    linear-gradient(135deg, hsl(var(--whatsapp-chat-bg)) 0%, hsl(210 20% 8%) 100%);
+  position: relative;
+}
+
+.whatsapp-chat-bg::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 1px 1px, rgba(255,255,255,0.02) 1px, transparent 0);
+  background-size: 20px 20px;
+  pointer-events: none;
+}
+
+/* Interactive Hover Effects */
+.chat-item-hover {
+  @apply transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-lg;
+  transition-property: transform, box-shadow, background-color, border-color;
+}
+
+.chat-item-hover:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(37, 211, 102, 0.3);
+}
+
+/* Modern Shadow System */
+.shadow-whatsapp {
+  box-shadow: 
+    0 10px 40px rgba(0, 0, 0, 0.3),
+    0 4px 12px rgba(0, 0, 0, 0.2),
+    0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.shadow-soft {
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.15),
+    0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Gradient Text */
+.gradient-text {
+  background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--secondary)) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Modern Button Hover */
+.modern-button {
+  @apply transition-all duration-300 ease-out hover:scale-105 hover:shadow-lg;
+  position: relative;
+  overflow: hidden;
+}
+
+.modern-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  transition: left 0.5s;
+}
+
+.modern-button:hover::before {
+  left: 100%;
+}
+
+/* Status Indicators */
+.status-online {
+  @apply relative;
+}
+
+.status-online::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 12px;
+  height: 12px;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  border: 2px solid hsl(var(--card));
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
+}
+
+/* Loading Animation */
+.loading-dots {
+  display: inline-flex;
+  gap: 4px;
+}
+
+.loading-dots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: hsl(var(--primary));
+  animation: loadingDots 1.4s infinite ease-in-out;
+}
+
+.loading-dots span:nth-child(1) { animation-delay: -0.32s; }
+.loading-dots span:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes loadingDots {
+  0%, 80%, 100% { 
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  40% { 
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Modern Transitions */
+.smooth-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bounce-in {
+  animation: bounceIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Animation Delays */
+  .animation-delay-0 {
+    animation-delay: 0s;
+  }
+  
+  .animation-delay-160 {
+    animation-delay: 0.16s;
+  }
+  
+  .animation-delay-320 {
+    animation-delay: 0.32s;
+  }
+  
+  .bounce-delay-0 {
+    animation-delay: 0s;
+    animation-duration: 1.4s;
+  }
+  
+  .bounce-delay-100 {
+    animation-delay: 0.1s;
+    animation-duration: 1.4s;
+  }
+  
+  .bounce-delay-200 {
+    animation-delay: 0.2s;
+    animation-duration: 1.4s;
+  }
+
+  /* Progress Bar Dynamic Width */
+  [data-width="0"] { width: 0%; }
+  [data-width="5"] { width: 5%; }
+  [data-width="10"] { width: 10%; }
+  [data-width="15"] { width: 15%; }
+  [data-width="20"] { width: 20%; }
+  [data-width="25"] { width: 25%; }
+  [data-width="30"] { width: 30%; }
+  [data-width="35"] { width: 35%; }
+  [data-width="40"] { width: 40%; }
+  [data-width="45"] { width: 45%; }
+  [data-width="50"] { width: 50%; }
+  [data-width="55"] { width: 55%; }
+  [data-width="60"] { width: 60%; }
+  [data-width="65"] { width: 65%; }
+  [data-width="70"] { width: 70%; }
+  [data-width="75"] { width: 75%; }
+  [data-width="80"] { width: 80%; }
+  [data-width="85"] { width: 85%; }
+  [data-width="90"] { width: 90%; }
+  [data-width="95"] { width: 95%; }
+  [data-width="100"] { width: 100%; }
+
+  /* Progress Bar Classes */
+  .progress-bar-0 { width: 0%; }
+  .progress-bar-5 { width: 5%; }
+  .progress-bar-10 { width: 10%; }
+  .progress-bar-15 { width: 15%; }
+  .progress-bar-20 { width: 20%; }
+  .progress-bar-25 { width: 25%; }
+  .progress-bar-30 { width: 30%; }
+  .progress-bar-35 { width: 35%; }
+  .progress-bar-40 { width: 40%; }
+  .progress-bar-45 { width: 45%; }
+  .progress-bar-50 { width: 50%; }
+  .progress-bar-55 { width: 55%; }
+  .progress-bar-60 { width: 60%; }
+  .progress-bar-65 { width: 65%; }
+  .progress-bar-70 { width: 70%; }
+  .progress-bar-75 { width: 75%; }
+  .progress-bar-80 { width: 80%; }
+  .progress-bar-85 { width: 85%; }
+  .progress-bar-90 { width: 90%; }
+  .progress-bar-95 { width: 95%; }
+  .progress-bar-100 { width: 100%; }
+
+  /* Glass Effect Utilities */
+  .glass-card {
+    @apply bg-white/10 backdrop-blur-md border border-white/20 shadow-xl;
+  }
+  
+  .glass-effect {
+    @apply backdrop-blur-md bg-white/5;
+  }
+
+  /* Modern Button */
+  .modern-button {
+    @apply transition-all duration-200 hover:scale-105 active:scale-95;
+  }
+
+  /* Gradient Background */
+  .bg-gradient-radial {
+    background: radial-gradient(circle, var(--tw-gradient-stops));
+  }
+
+  /* Skeleton Shimmer */
+  .skeleton-shimmer {
+    animation: skeleton-shimmer 2s ease-in-out infinite;
+  }
+
+/* ========== THEME CUSTOMIZATION SUPPORT ========== */
+
+/* Variáveis de tema dinâmicas */
+:root {
+  --primary-color: #25D366;
+  --secondary-color: #128C7E;
+  --accent-color: #34B7F1;
+  --font-family: 'Inter';
+  --font-size: 14px;
+  --border-radius: 8px;
+}
+
+/* Aplicação automática das cores do tema */
+.theme-aware {
+  color: var(--primary-color) !important;
+}
+
+.theme-bg-primary {
+  background-color: var(--primary-color) !important;
+}
+
+.theme-bg-secondary {
+  background-color: var(--secondary-color) !important;
+}
+
+.theme-bg-accent {
+  background-color: var(--accent-color) !important;
+}
+
+.theme-border-primary {
+  border-color: var(--primary-color) !important;
+}
+
+/* Preview de temas */
+.theme-preset-btn {
+  transition: all 0.3s ease !important;
+}
+
+.theme-preset-btn:hover {
+  transform: scale(1.05) !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3) !important;
+}
+
+.theme-preset-dark {
+  background: linear-gradient(135deg, #0A0E13 0%, #151922 100%) !important;
+}
+
+.theme-preset-light {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%) !important;
+}
+
+/* Animação para aplicação de tema */
+@keyframes fade-in-out {
+  0% { opacity: 0; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(0.8); }
+}
+
+.animate-fade-in-out {
+  animation: fade-in-out 1.2s ease-in-out !important;
+}
+
+/* Glass effects com cores do tema */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.05) !important;
+  -webkit-backdrop-filter: blur(10px) saturate(180%) !important;
+  backdrop-filter: blur(10px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.dark .glass-effect {
+  background: rgba(0, 0, 0, 0.2) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Modern buttons com tema */
+.modern-button {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.modern-button:hover {
+  background: rgba(37, 211, 102, 0.15) !important;
+  border-color: rgba(37, 211, 102, 0.3) !important;
+  /* transform: translateY(-1px) !important; - DISABLED to prevent modal jumping */
+}
+
+/* Gradient text com cores do tema */
+.gradient-text {
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color)) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+/* Cores primárias aplicadas dinamicamente */
+.text-primary {
+  color: hsl(var(--primary)) !important;
+}
+
+.bg-primary {
+  background-color: hsl(var(--primary)) !important;
+}
+
+.border-primary {
+  border-color: hsl(var(--primary)) !important;
+}
+
+/* Cards com tema */
+.glass-card {
+  background: rgba(255, 255, 255, 0.05) !important;
+  -webkit-backdrop-filter: blur(15px) saturate(180%) !important;
+  backdrop-filter: blur(15px) saturate(180%) !important;
+  border: 1px solid rgba(52, 183, 241, 0.2) !important;
+  border-radius: var(--border-radius) !important;
+  transition: all 0.3s ease !important;
+}
+
+.glass-card:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(37, 211, 102, 0.3) !important;
+  /* transform: translateY(-2px) !important; - DISABLED to prevent modal jumping */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
+}
+
+.dark .glass-card {
+  background: rgba(0, 0, 0, 0.3) !important;
+  border: 1px solid rgba(52, 183, 241, 0.2) !important;
+}
+
+/* Suporte a fontes customizadas */
+body, 
+.font-custom {
+  font-family: var(--font-family), 'Inter', sans-serif !important;
+  font-size: var(--font-size) !important;
+}
+
+/* Border radius customizado */
+.rounded-custom,
+.rounded,
+.rounded-lg,
+.rounded-xl {
+  border-radius: var(--border-radius) !important;
+}
+
+/* ========== END THEME CUSTOMIZATION ========== */
+
+/* MODAL STABILITY - DEFINITIVE FIX */
+.stable-modal-content {
+  /* Força centralização absoluta */
+  transform: translateX(-50%) translateY(-50%) !important;
+  position: fixed !important;
+  left: 50% !important;
+  top: 50% !important;
+  
+  /* Isolamento completo de layout */
+  contain: layout style !important;
+  isolation: isolate !important;
+  will-change: auto !important;
+  
+  /* Previne qualquer mudança de transform */
+  transform-origin: center center !important;
+  backface-visibility: hidden !important;
+  
+  /* Overflow control */
+  overflow: auto !important;
+  
+  /* Garantir que o modal sempre apareça centralizado */
+  margin: 0 !important;
+  max-height: 95vh !important;
+  max-width: 95vw !important;
+  
+  /* Z-index para garantir que fique acima de tudo */
+  z-index: 9999 !important;
+}
+
+/* TOAST Z-INDEX FIX - Garantir que toasts fiquem acima de modais */
+[data-sonner-toaster] {
+  z-index: 99999 !important;
+}
+
+[data-radix-toast-viewport] {
+  z-index: 99999 !important;
+}
+
+/* DESABILITA TODOS OS TRANSFORMS E SCALES EM MODAIS */
+.stable-modal-content *,
+.stable-modal-content *::before,
+.stable-modal-content *::after {
+  will-change: auto !important;
+  animation: none !important;
+}
+
+/* Remove ALL hover transforms no conteúdo do modal */
+.stable-modal-content *:hover {
+  transform: none !important;
+  animation: none !important;
+}
+
+/* Close button específico - sem transforms */
+.stable-modal-content .modal-close-button:hover {
+  transform: none !important;
+  opacity: 1 !important;
+}
+
+/* Específicos para elementos problemáticos */
+.stable-modal-content .header-button:hover {
+  transform: none !important;
+  background: linear-gradient(135deg, 
+    rgba(37, 211, 102, 0.15) 0%, 
+    rgba(18, 140, 126, 0.1) 100%) !important;
+  border-color: rgba(37, 211, 102, 0.3) !important;
+  box-shadow: 
+    0 8px 25px rgba(37, 211, 102, 0.2),
+    0 4px 12px rgba(0, 0, 0, 0.3) !important;
+  color: rgba(37, 211, 102, 1) !important;
+}
+
+.stable-modal-content .header-logo:hover {
+  transform: none !important;
+  box-shadow: 
+    0 6px 20px rgba(37, 211, 102, 0.4),
+    0 2px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+.stable-modal-content .glass-card:hover {
+  transform: none !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(37, 211, 102, 0.3) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
+}
+
+.stable-modal-content .modern-button:hover {
+  transform: none !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+.stable-modal-content .icon-container:hover {
+  transform: none !important;
+}
+
+/* Desabilita QUALQUER classe do Tailwind com transform */
+.stable-modal-content [class*="hover:scale"]:hover,
+.stable-modal-content [class*="hover:translate"]:hover,
+.stable-modal-content [class*="transform"]:hover,
+.stable-modal-content [class*="transition-transform"]:hover {
+  transform: none !important;
+}
+
+/* Regras antigas (manter por compatibilidade) */
+.fixed-modal {
+  will-change: auto !important;
+  transform: translateX(-50%) translateY(-50%) !important;
+  contain: layout style !important;
+  overflow: hidden !important;
+}
+
+.fixed-modal * {
+  will-change: auto !important;
+}
+
+/* Prevent ALL layout shifts from hover effects in modals */
+.fixed-modal .smooth-transition {
+  transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+              border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Stable scrollable content */
+.modal-content-stable {
+  contain: layout style !important;
+  overflow-anchor: none !important;
+  position: relative !important;
+}
+
+/* Tooltip isolation for modals */
+.modal-content-stable .tooltip,
+.modal-content-stable [data-radix-tooltip-content] {
+  position: fixed !important;
+  z-index: 9999 !important;
+  pointer-events: none !important;
+}
+
+/* CRITICAL: Disable ALL transform changes on hover within modals */
+.fixed-modal .smooth-transition:hover,
+.fixed-modal .glass-card:hover,
+.fixed-modal .modern-button:hover,
+.fixed-modal .header-button:hover,
+.fixed-modal .header-logo-section:hover,
+.fixed-modal .chat-item-hover:hover,
+.fixed-modal [class*="hover:scale"]:hover,
+.fixed-modal [class*="hover:translate"]:hover {
+  transform: none !important;
+}
+
+/* Disable scale and translate animations in modals completely */
+.fixed-modal *,
+.stable-modal-content * {
+  animation: none !important;
+  will-change: auto !important;
+}
+
+.fixed-modal *:hover,
+.stable-modal-content *:hover {
+  transform: none !important;
+}
+
+/* Allow only safe hover effects in modals */
+.fixed-modal .glass-card:hover,
+.stable-modal-content .glass-card:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(37, 211, 102, 0.3) !important;
+  transform: none !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
+}
+
+.fixed-modal .modern-button:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  transform: none !important;
+}
+
+/* ========== DROPDOWN E SELECT Z-INDEX FIX ========== */
+
+/* Correção para dropdowns/selects em modais */
+[data-radix-popper-content-wrapper] {
+  z-index: 99999 !important;
+}
+
+[data-radix-select-content] {
+  z-index: 99999 !important;
+}
+
+[data-radix-dropdown-menu-content] {
+  z-index: 99999 !important;
+}
+
+[data-radix-popover-content] {
+  z-index: 99999 !important;
+}
+
+[data-radix-tooltip-content] {
+  z-index: 99999 !important;
+}
+
+[data-radix-hover-card-content] {
+  z-index: 99999 !important;
+}
+
+[data-radix-context-menu-content] {
+  z-index: 99999 !important;
+}
+
+/* Correção específica para selects em modais */
+.fixed-modal [data-radix-select-content],
+.modal-content-stable [data-radix-select-content],
+.dialog-content [data-radix-select-content] {
+  z-index: 999999 !important;
+}
+
+/* Correções de z-index para dropdowns, selects e outros componentes que podem ficar atrás de modais */
+
+/* Radix UI Components - Z-Index Fix */
+[data-radix-select-content],
+[data-radix-dropdown-menu-content],
+[data-radix-popover-content],
+[data-radix-tooltip-content],
+[data-radix-combobox-content],
+[data-radix-menubar-content],
+[data-radix-navigation-menu-content],
+[data-radix-context-menu-content] {
+  z-index: 99999 !important;
+}
+
+/* Select Component Specific */
+.select-content {
+  z-index: 99999 !important;
+}
+
+/* Command Dialog Fix */
+[data-radix-dialog-content] {
+  z-index: 9999;
+}
+
+/* Tooltip and Popover Fix */
+[data-state="open"][data-side] {
+  z-index: 99999 !important;
+}
+
+/* Dropdown e Select triggers */
+[data-radix-select-trigger],
+[data-radix-dropdown-menu-trigger] {
+  position: relative;
+  z-index: 1;
+}
+
+/* Fix para componentes do shadcn/ui */
+.dropdown-menu-content,
+.select-content,
+.popover-content,
+.tooltip-content,
+.command-dialog,
+.context-menu-content {
+  z-index: 99999 !important;
+}
+
+/* Overlay fixes */
+.overlay {
+  z-index: 9998;
+}
+
+/* Modal backdrop */
+.modal-backdrop {
+  z-index: 9999;
+}
+
+/* Chart tooltip fixes */
+.recharts-tooltip-wrapper {
+  z-index: 99999 !important;
+}
+
+/* React Select fixes (se estiver sendo usado) */
+.react-select__menu {
+  z-index: 99999 !important;
+}
+
+.react-select__menu-portal {
+  z-index: 99999 !important;
+}

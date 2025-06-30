@@ -1,0 +1,272 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Modern WhatsApp Bot Dashboard - Dark Theme */
+
+@layer base {
+  :root {
+    /* Light Theme - WhatsApp Modern */
+    --background: 0 0% 100%; /* White */
+    --foreground: 210 24% 16%; /* Dark Blue Grey */
+
+    --card: 0 0% 100%; /* White */
+    --card-foreground: 210 24% 16%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 210 24% 16%;
+
+    --primary: 142 76% 46%; /* #25D366 WhatsApp Green */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 158 64% 34%; /* #128C7E Dark Green */
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 210 10% 95%; /* Light Grey */
+    --muted-foreground: 210 10% 40%; /* Medium Grey */
+
+    --accent: 200 18% 46%; /* Blue Grey */
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 210 10% 90%; /* Light Border */
+    --input: 210 10% 95%;
+    --ring: 142 76% 46%;
+
+    --radius: 1rem;
+
+    /* Chart Colors */
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+
+    /* Sidebar Variables */
+    --sidebar-background: 0 0% 98%; /* Light Sidebar */
+    --sidebar-foreground: 240 5.3% 26.1%; /* Dark Text */
+    --sidebar-primary: 142 76% 46%; /* WhatsApp Green */
+    --sidebar-primary-foreground: 0 0% 98%; /* White Text */
+    --sidebar-accent: 240 4.8% 95.9%; /* Light Accent */
+    --sidebar-accent-foreground: 240 5.9% 10%; /* Dark Text */
+    --sidebar-border: 220 13% 91%; /* Light Border */
+    --sidebar-ring: 142 76% 46%; /* WhatsApp Green */
+
+    /* WhatsApp Theme Colors */
+    --whatsapp-green: 142 76% 46%; /* #25D366 */
+    --whatsapp-dark-green: 158 64% 34%; /* #128C7E */
+    --whatsapp-background: 0 0% 100%; /* White in light mode */
+    --whatsapp-chat-bg: 210 10% 98%; /* Very light grey */
+    --whatsapp-text: 210 24% 16%; /* Dark text */
+    --whatsapp-accent: 200 18% 46%; /* Blue Grey */
+    
+    /* Glass Effect Variables */
+    --glass-bg: rgba(255, 255, 255, 0.8);
+    --glass-border: rgba(0, 0, 0, 0.1);
+    --glass-shadow: rgba(0, 0, 0, 0.1);
+    
+    /* Header Optimization Variables */
+    --header-height: 56px;
+    --header-padding: 8px;
+    --header-button-height: 32px;
+    --header-button-padding: 8px 12px;
+    --header-icon-size: 16px;
+    --header-font-size: 12px;
+    --header-gap: 6px;
+  }
+
+  .dark {
+    /* Dark Theme - Modern WhatsApp Style */
+    --background: 210 24% 8%; /* #0A0E13 Very Dark Blue */
+    --foreground: 210 20% 95%; /* #F1F2F6 Light Grey */
+
+    --card: 210 20% 12%; /* #151922 Dark Card */
+    --card-foreground: 210 20% 95%;
+
+    --popover: 210 20% 12%;
+    --popover-foreground: 210 20% 95%;
+
+    --primary: 142 76% 46%; /* #25D366 WhatsApp Green */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 158 64% 34%; /* #128C7E Dark Green */
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 210 20% 15%; /* #1C212A Dark Muted */
+    --muted-foreground: 210 10% 60%; /* #8B95A1 */
+
+    --accent: 200 18% 25%; /* #2C3E50 Dark Blue Grey */
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 210 20% 18%; /* #212832 */
+    --input: 210 20% 18%;
+    --ring: 142 76% 46%;
+
+    /* Chart Colors for Dark Mode */
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+
+    /* Sidebar Variables for Dark Mode */
+    --sidebar-background: 210 20% 12%; /* Dark Card similar to card */
+    --sidebar-foreground: 210 20% 95%; /* Light text */
+    --sidebar-primary: 142 76% 46%; /* WhatsApp Green */
+    --sidebar-primary-foreground: 0 0% 100%; /* White text */
+    --sidebar-accent: 210 20% 15%; /* Slightly lighter for hover */
+    --sidebar-accent-foreground: 210 20% 95%; /* Light text */
+    --sidebar-border: 210 20% 18%; /* Same as border */
+    --sidebar-ring: 142 76% 46%; /* WhatsApp Green */
+
+    /* WhatsApp Theme Colors for Dark Mode */
+    --whatsapp-green: 142 76% 46%; /* #25D366 */
+    --whatsapp-dark-green: 158 64% 34%; /* #128C7E */
+    --whatsapp-background: 210 24% 8%; /* #0A0E13 */
+    --whatsapp-chat-bg: 210 20% 10%; /* #0F1419 */
+    --whatsapp-text: 210 20% 95%; /* #F1F2F6 */
+    --whatsapp-accent: 200 18% 25%; /* #2C3E50 */
+    
+    /* Glass Effect Variables for Dark Mode */
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-shadow: rgba(0, 0, 0, 0.3);
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    background: linear-gradient(135deg, hsl(var(--background)) 0%, hsl(var(--card)) 100%);
+    min-height: 100vh;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-muted/30;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-accent/50 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-accent/70;
+  }
+
+  /* Modern Glass Effects */
+  .glass-effect {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 8px 32px var(--glass-shadow);
+  }
+
+  /* Loading Animation Utilities */
+  .loading-animation {
+    animation: skeleton-shimmer 2s ease-in-out infinite;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.04),
+      transparent
+    );
+    background-size: 200% 100%;
+  }
+
+  /* Text Gradient Effects */
+  .gradient-text {
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% 200%;
+    animation: gradient-text 6s ease infinite;
+  }
+
+  /* Modern Button Styles */
+  .modern-button {
+    @apply relative overflow-hidden transition-all duration-300;
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
+    background-size: 200% 200%;
+    animation: gradient 6s ease infinite;
+  }
+
+  .modern-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3);
+  }
+
+  .modern-button:active {
+    transform: translateY(0);
+  }
+
+  /* Neon Effect */
+  .neon-effect {
+    animation: neon-pulse 2s ease-in-out infinite;
+  }
+
+  /* Float Animation */
+  .float-animation {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .float-animation-delayed {
+    animation: float 6s ease-in-out infinite 2s;
+  }
+
+  /* Aurora Background */
+  .aurora-bg {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .aurora-bg::before,
+  .aurora-bg::after {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      45deg,
+      transparent,
+      hsl(var(--primary) / 0.1),
+      transparent,
+      hsl(var(--secondary) / 0.1),
+      transparent
+    );
+  }
+
+  .aurora-bg::before {
+    animation: aurora-1 20s linear infinite;
+  }
+
+  .aurora-bg::after {
+    animation: aurora-2 25s linear infinite reverse;
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "name": "catalog-backend",
+  "version": "1.0.0",
+  "description": "Catálogo web profissional para integração com WhatsApp bot. Backend Node.js/Express, PostgreSQL, API RESTful, autenticação JWT, webhooks, documentação Swagger.",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "migrate": "dotenv -e .env -- sequelize-cli db:migrate",
+    "seed": "sequelize db:seed:all"
+  },
+  "author": "Inaugura Lar",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-jwt": "^7.7.8",
+    "jsonwebtoken": "^9.0.2",
+    "node-tesseract-ocr": "^2.2.1",
+    "pg": "^8.11.5",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.37.1",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^4.6.3"
+  },
+  "devDependencies": {
+    "dotenv-cli": "^8.0.0",
+    "nodemon": "^3.1.0",
+    "sequelize-cli": "^6.6.1"
+  }
+}

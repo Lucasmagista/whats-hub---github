@@ -1,0 +1,119 @@
+/* Draggable Modal Styles */
+.draggable-modal-position {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 99999;
+  transition: none;
+}
+
+.fixed-modal {
+  z-index: 99999;
+}
+
+.modal-content-stable {
+  position: relative;
+  z-index: 1;
+}
+
+/* Estilos específicos para AboutBotModal */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 99999;
+}
+
+.modal-centered {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: fixed;
+  z-index: 99999;
+  min-width: 400px;
+  min-height: 500px;
+  max-width: 90vw;
+  max-height: 85vh;
+  box-sizing: border-box;
+}
+
+.modal-dragged {
+  position: fixed;
+  z-index: 99999;
+  min-width: 400px;
+  min-height: 500px;
+  max-width: 90vw;
+  max-height: 85vh;
+  box-sizing: border-box;
+}
+
+/* Classes especiais para posicionamento dinâmico */
+.modal-dragged-custom {
+  position: fixed;
+  z-index: 99999;
+  min-width: 400px;
+  min-height: 500px;
+  max-width: 90vw;
+  max-height: 85vh;
+  box-sizing: border-box;
+}
+
+/* Override para posicionamento dinâmico via JavaScript */
+.modal-dragged-custom[data-dragged="true"] {
+  /* Position will be set via CSS custom properties */
+  top: var(--modal-top, 50%);
+  left: var(--modal-left, 50%);
+  transform: var(--modal-transform, translate(-50%, -50%));
+}
+
+/* Garantir que o handle de drag funcione corretamente */
+.drag-handle {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Cursor durante drag */
+.react-draggable-dragging .drag-handle {
+  cursor: grabbing !important;
+}
+
+/* Estilos para maximizado */
+.draggable-modal-maximized {
+  position: fixed !important;
+  top: 1rem !important;
+  left: 1rem !important;
+  right: 1rem !important;
+  bottom: 1rem !important;
+  width: auto !important;
+  height: auto !important;
+  transform: none !important;
+}
+
+/* Prevenir seleção de texto durante drag */
+.react-draggable-dragging * {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+}
+
+/* Garantir que dropdowns e selects tenham z-index alto dentro do modal */
+.fixed-modal [data-radix-popper-content-wrapper] {
+  z-index: 999999 !important;
+}
+
+.fixed-modal .select-content {
+  z-index: 999999 !important;
+}
+
+/* Animações suaves */
+.fixed-modal:not(.react-draggable-dragging) {
+  transition: all 0.2s ease-in-out;
+}

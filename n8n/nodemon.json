@@ -1,0 +1,29 @@
+{
+  "watch": [
+    "*.js",
+    "modules/**/*.js",
+    "database/**/*.js",
+    "scripts/**/*.js"
+  ],
+  "ignore": [
+    "node_modules/**/*",
+    "logs/**/*",
+    "uploads/**/*",
+    "backups/**/*",
+    "sessions/**/*",
+    ".wwebjs_auth/**/*",
+    ".wwebjs_cache/**/*",
+    "userStates.json",
+    "callbacks.json",
+    "*.log",
+    "*.tmp",
+    "*.pid",
+    "package-lock.json"
+  ],
+  "ext": "js,json",
+  "env": {
+    "NODE_ENV": "development"
+  },
+  "delay": 2000,
+  "verbose": true
+}

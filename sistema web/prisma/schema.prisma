@@ -1,0 +1,696 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  role          UserRole  @default(AGENT)
+  permissions   String    @default("")
+  isActive      Boolean   @default(true)
+  lastLogin     DateTime?
+  preferences   Json?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  accounts         Account[]
+  sessions         Session[]
+  tickets          Ticket[]
+  assignedTickets  Ticket[]        @relation("AssignedTickets")
+  auditLogs        AuditLog[]
+  emailCampaigns   EmailCampaign[]
+  dashboards       Dashboard[]
+  notifications    Notification[]
+  apiKeys          ApiKey[]
+  botVersions      BotVersion[]
+  teamMemberships  TeamMember[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Team {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  members TeamMember[]
+  tickets Ticket[]
+}
+
+model TeamMember {
+  id     String   @id @default(cuid())
+  userId String
+  teamId String
+  role   TeamRole @default(MEMBER)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  team Team @relation(fields: [teamId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, teamId])
+}
+
+model Customer {
+  id              String            @id @default(cuid())
+  name            String
+  phone           String            @unique
+  email           String?
+  avatar          String?
+  status          CustomerStatus    @default(ACTIVE)
+  tags            String            @default("")
+  notes           String?
+  lastMessage     DateTime?
+  totalMessages   Int               @default(0)
+  satisfaction    Float?
+  language        String            @default("pt-BR")
+  timezone        String            @default("America/Sao_Paulo")
+  metadata        Json?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  tickets         Ticket[]
+  messages        Message[]
+  interactions    Interaction[]
+  segments        CustomerSegment[]
+  emailRecipients EmailRecipient[]
+}
+
+model CustomerSegment {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  criteria    Json
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  customers Customer[]
+}
+
+model Ticket {
+  id              String         @id @default(cuid())
+  subject         String
+  description     String?
+  status          TicketStatus   @default(OPEN)
+  priority        TicketPriority @default(MEDIUM)
+  category        String?
+  customerId      String
+  assignedTo      String?
+  teamId          String?
+  createdBy       String
+  slaDeadline     DateTime?
+  resolvedAt      DateTime?
+  closedAt        DateTime?
+  escalatedAt     DateTime?
+  escalationLevel Int            @default(0)
+  satisfaction    Float?
+  tags            String            @default("")
+  metadata        Json?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  customer        Customer        @relation(fields: [customerId], references: [id])
+  assignee        User?           @relation("AssignedTickets", fields: [assignedTo], references: [id])
+  team            Team?           @relation(fields: [teamId], references: [id])
+  creator         User            @relation(fields: [createdBy], references: [id])
+  messages        TicketMessage[]
+  interactions    Interaction[]
+  escalations     Escalation[]
+  slaEvents       SlaEvent[]
+}
+
+model TicketMessage {
+  id         String    @id @default(cuid())
+  ticketId   String
+  sender     String
+  message    String
+  isInternal Boolean   @default(false)
+  attachments Json?
+  metadata   Json?
+  createdAt  DateTime  @default(now())
+
+  ticket Ticket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+}
+
+model Escalation {
+  id          String          @id @default(cuid())
+  ticketId    String
+  fromLevel   Int
+  toLevel     Int
+  reason      String
+  triggeredBy EscalationType
+  createdAt   DateTime        @default(now())
+
+  ticket Ticket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+}
+
+model SlaEvent {
+  id        String    @id @default(cuid())
+  ticketId  String
+  eventType SlaEventType
+  deadline  DateTime
+  actualTime DateTime?
+  isMet     Boolean?
+  createdAt DateTime  @default(now())
+
+  ticket Ticket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+}
+
+model Message {
+  id          String        @id @default(cuid())
+  customerId  String
+  content     String
+  type        MessageType   @default(TEXT)
+  direction   Direction
+  status      MessageStatus @default(SENT)
+  timestamp   DateTime      @default(now())
+  metadata    Json?
+  sentiment   Float?
+  language    String?
+  isEncrypted Boolean       @default(false)
+  threadId    String?
+
+  customer     Customer      @relation(fields: [customerId], references: [id])
+  interactions Interaction[]
+}
+
+model Interaction {
+  id         String          @id @default(cuid())
+  customerId String
+  ticketId   String?
+  messageId  String?
+  type       InteractionType
+  channel    String
+  duration   Int?
+  outcome    String?
+  metadata   Json?
+  createdAt  DateTime        @default(now())
+
+  customer Customer @relation(fields: [customerId], references: [id])
+  ticket   Ticket?  @relation(fields: [ticketId], references: [id])
+  message  Message? @relation(fields: [messageId], references: [id])
+}
+
+model EmailTemplate {
+  id          String   @id @default(cuid())
+  name        String
+  subject     String
+  content     String
+  variables   String            @default("")
+  isActive    Boolean  @default(true)
+  version     Int      @default(1)
+  category    String?
+  tags        String            @default("")
+  metadata    Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  emails     Email[]
+  campaigns  EmailCampaign[]
+  abTestsA   AbTest[] @relation("AbTestTemplateA")
+  abTestsB   AbTest[] @relation("AbTestTemplateB")
+  workflows  WorkflowStep[]
+}
+
+model EmailCampaign {
+  id           String            @id @default(cuid())
+  name         String
+  description  String?
+  templateId   String?
+  status       CampaignStatus    @default(DRAFT)
+  scheduledAt  DateTime?
+  sentAt       DateTime?
+  createdBy    String
+  targetSegment String?
+  metadata     Json?
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+
+  template   EmailTemplate?   @relation(fields: [templateId], references: [id])
+  creator    User             @relation(fields: [createdBy], references: [id])
+  emails     Email[]
+  recipients EmailRecipient[]
+  analytics  CampaignAnalytics[]
+}
+
+model Email {
+  id         String      @id @default(cuid())
+  templateId String?
+  campaignId String?
+  to         String
+  subject    String
+  content    String
+  status     EmailStatus @default(PENDING)
+  sentAt     DateTime?
+  openedAt   DateTime?
+  clickedAt  DateTime?
+  metadata   Json?
+  createdAt  DateTime    @default(now())
+
+  template EmailTemplate? @relation(fields: [templateId], references: [id])
+  campaign EmailCampaign? @relation(fields: [campaignId], references: [id])
+}
+
+model EmailRecipient {
+  id         String @id @default(cuid())
+  campaignId String
+  customerId String
+
+  campaign EmailCampaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  customer Customer      @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  @@unique([campaignId, customerId])
+}
+
+model AbTest {
+  id          String    @id @default(cuid())
+  name        String
+  templateAId String
+  templateBId String
+  splitRatio  Float     @default(0.5)
+  status      TestStatus @default(RUNNING)
+  startedAt   DateTime?
+  endedAt     DateTime?
+  winnerTemplate String?
+  metadata    Json?
+  createdAt   DateTime  @default(now())
+
+  templateA EmailTemplate @relation("AbTestTemplateA", fields: [templateAId], references: [id])
+  templateB EmailTemplate @relation("AbTestTemplateB", fields: [templateBId], references: [id])
+}
+
+model Workflow {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  isActive    Boolean  @default(true)
+  trigger     Json
+  metadata    Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  steps WorkflowStep[]
+}
+
+model WorkflowStep {
+  id         String     @id @default(cuid())
+  workflowId String
+  templateId String?
+  stepType   StepType
+  order      Int
+  conditions Json?
+  actions    Json
+  delay      Int?
+  metadata   Json?
+
+  workflow Workflow       @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+  template EmailTemplate? @relation(fields: [templateId], references: [id])
+}
+
+model CampaignAnalytics {
+  id         String   @id @default(cuid())
+  campaignId String
+  metric     String
+  value      Float
+  timestamp  DateTime @default(now())
+
+  campaign EmailCampaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+}
+
+model BotConfig {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String
+  category  String?
+  isSecret  Boolean  @default(false)
+  updatedAt DateTime @updatedAt
+}
+
+model BotVersion {
+  id          String        @id @default(cuid())
+  version     String
+  description String?
+  config      Json
+  status      VersionStatus @default(DRAFT)
+  isActive    Boolean       @default(false)
+  createdBy   String
+  deployedAt  DateTime?
+  rollbackTo  String?
+  metadata    Json?
+  createdAt   DateTime      @default(now())
+
+  creator User @relation(fields: [createdBy], references: [id])
+}
+
+model Log {
+  id        String   @id @default(cuid())
+  level     LogLevel
+  message   String
+  details   Json?
+  source    String?
+  userId    String?
+  sessionId String?
+  ipAddress String?
+  userAgent String?
+  timestamp DateTime @default(now())
+
+  @@index([level, timestamp])
+  @@index([source, timestamp])
+  @@index([userId, timestamp])
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String
+  action    String
+  resource  String
+  resourceId String?
+  oldValues Json?
+  newValues Json?
+  ipAddress String?
+  userAgent String?
+  timestamp DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([userId, timestamp])
+  @@index([resource, timestamp])
+}
+
+model Dashboard {
+  id        String   @id @default(cuid())
+  name      String
+  userId    String
+  layout    Json
+  widgets   Json
+  isDefault Boolean  @default(false)
+  isPublic  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Notification {
+  id        String             @id @default(cuid())
+  userId    String
+  title     String
+  message   String
+  type      NotificationType
+  priority  NotificationPriority @default(MEDIUM)
+  isRead    Boolean            @default(false)
+  data      Json?
+  expiresAt DateTime?
+  createdAt DateTime           @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, isRead])
+}
+
+model ApiKey {
+  id          String   @id @default(cuid())
+  name        String
+  key         String   @unique
+  userId      String
+  permissions String            @default("")
+  isActive    Boolean  @default(true)
+  lastUsed    DateTime?
+  expiresAt   DateTime?
+  createdAt   DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Webhook {
+  id        String      @id @default(cuid())
+  name      String
+  url       String
+  events    String      @default("")
+  isActive  Boolean     @default(true)
+  secret    String?
+  headers   Json?
+  retries   Int         @default(3)
+  timeout   Int         @default(30)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  deliveries WebhookDelivery[]
+}
+
+model WebhookDelivery {
+  id         String            @id @default(cuid())
+  webhookId  String
+  event      String
+  payload    Json
+  status     DeliveryStatus
+  response   String?
+  attempts   Int               @default(0)
+  nextRetry  DateTime?
+  createdAt  DateTime          @default(now())
+
+  webhook Webhook @relation(fields: [webhookId], references: [id], onDelete: Cascade)
+}
+
+model Integration {
+  id          String   @id @default(cuid())
+  name        String
+  type        String
+  config      Json
+  isActive    Boolean  @default(true)
+  lastSync    DateTime?
+  syncStatus  String?
+  metadata    Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model PerformanceMetric {
+  id        String   @id @default(cuid())
+  metric    String
+  value     Float
+  tags      Json?
+  timestamp DateTime @default(now())
+
+  @@index([metric, timestamp])
+}
+
+model SecurityEvent {
+  id          String   @id @default(cuid())
+  type        String
+  severity    String
+  description String
+  userId      String?
+  ipAddress   String?
+  userAgent   String?
+  metadata    Json?
+  timestamp   DateTime @default(now())
+
+  @@index([type, timestamp])
+  @@index([severity, timestamp])
+}
+
+model DataRetention {
+  id          String   @id @default(cuid())
+  dataType    String
+  retentionDays Int
+  isActive    Boolean  @default(true)
+  lastCleanup DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Enums
+enum UserRole {
+  SUPER_ADMIN
+  ADMIN
+  MANAGER
+  AGENT
+  VIEWER
+}
+
+enum TeamRole {
+  LEAD
+  MEMBER
+}
+
+enum CustomerStatus {
+  ACTIVE
+  INACTIVE
+  BLOCKED
+  VIP
+}
+
+enum TicketStatus {
+  OPEN
+  IN_PROGRESS
+  WAITING_CUSTOMER
+  RESOLVED
+  CLOSED
+  ESCALATED
+}
+
+enum TicketPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+  CRITICAL
+}
+
+enum MessageType {
+  TEXT
+  IMAGE
+  AUDIO
+  VIDEO
+  DOCUMENT
+  LOCATION
+  CONTACT
+  STICKER
+}
+
+enum Direction {
+  INBOUND
+  OUTBOUND
+}
+
+enum MessageStatus {
+  PENDING
+  SENT
+  DELIVERED
+  READ
+  FAILED
+}
+
+enum InteractionType {
+  MESSAGE
+  CALL
+  EMAIL
+  MEETING
+  NOTE
+}
+
+enum EmailStatus {
+  PENDING
+  SENT
+  DELIVERED
+  OPENED
+  CLICKED
+  BOUNCED
+  FAILED
+}
+
+enum CampaignStatus {
+  DRAFT
+  SCHEDULED
+  SENDING
+  SENT
+  PAUSED
+  CANCELLED
+}
+
+enum TestStatus {
+  DRAFT
+  RUNNING
+  COMPLETED
+  CANCELLED
+}
+
+enum StepType {
+  EMAIL
+  DELAY
+  CONDITION
+  WEBHOOK
+}
+
+enum VersionStatus {
+  DRAFT
+  TESTING
+  APPROVED
+  DEPLOYED
+  DEPRECATED
+}
+
+enum LogLevel {
+  DEBUG
+  INFO
+  WARNING
+  ERROR
+  CRITICAL
+}
+
+enum NotificationType {
+  INFO
+  WARNING
+  ERROR
+  SUCCESS
+}
+
+enum NotificationPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum DeliveryStatus {
+  PENDING
+  SUCCESS
+  FAILED
+  RETRYING
+}
+
+enum EscalationType {
+  AUTOMATIC
+  MANUAL
+  SLA_BREACH
+}
+
+enum SlaEventType {
+  FIRST_RESPONSE
+  RESOLUTION
+  ESCALATION
+}

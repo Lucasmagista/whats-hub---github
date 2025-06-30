@@ -1,0 +1,30 @@
+# Ignorar arquivos dinâmicos
+userStates.json
+callbacks.json
+*.log
+*.tmp
+*.pid
+
+# Ignorar diretórios de dados
+logs/
+uploads/
+backups/
+sessions/
+.wwebjs_auth/
+.wwebjs_cache/
+
+# Ignorar node_modules
+node_modules/
+
+# Ignorar arquivos de configuração de IDE
+.vscode/
+.idea/
+
+# Ignorar arquivos temporários
+*.swp
+*.swo
+*~
+
+# Ignorar arquivos de sistema
+.DS_Store
+Thumbs.db

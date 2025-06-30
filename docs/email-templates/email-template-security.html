@@ -1,0 +1,24 @@
+<!-- Template de Segurança (MailerSend Ready) -->
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Alerta de Segurança</title>
+    <style>body{font-family:Arial,sans-serif;background:#f9f9f9;}.container{background:#fff;padding:32px;border-radius:8px;max-width:500px;margin:0 auto;}.title{color:#e65100;font-size:22px;}.content{margin-top:16px;font-size:16px;}.footer{margin-top:32px;font-size:12px;color:#888;}</style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="title">Alerta de Segurança</div>
+      <div class="content">
+        Olá {{user_name}},<br><br>
+        Detectamos uma atividade suspeita em sua conta.<br>
+        Detalhes: <strong>{{security_details}}</strong><br><br>
+        Data/Hora: {{security_datetime}}
+      </div>
+      <div class="footer">
+        WhatsHub Pro &copy; 2025
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,6 @@
+{
+  "groups": [],
+  "description": "Lista de IDs de grupos onde o bot pode responder",
+  "instructions": "Adicione os IDs dos grupos no array 'groups'. Use o comando /groups para ver os grupos disponíveis",
+  "lastUpdated": "2025-06-26T12:56:37.062Z"
+}

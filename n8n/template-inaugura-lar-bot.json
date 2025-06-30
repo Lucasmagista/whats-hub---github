@@ -1,0 +1,501 @@
+{
+  "meta": {
+    "instanceId": "inaugura-lar-whatsapp-bot-advanced"
+  },
+  "nodes": [
+    {
+      "id": "webhook-trigger",
+      "name": "🔗 Webhook WhatsApp",
+      "type": "n8n-nodes-base.webhook",
+      "position": [240, 400],
+      "webhookId": "whatsapp-webjs-messages",
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "whatsapp-messages",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "typeVersion": 1.1
+    },
+    {
+      "id": "validate-message",
+      "name": "✅ Validar Mensagem",
+      "type": "n8n-nodes-base.function",
+      "position": [440, 400],
+      "parameters": {
+        "functionCode": "// Validar e normalizar dados do WhatsApp Web.js\nconst body = $input.all()[0].json.body;\n\nif (!body || !body.from || !body.body) {\n  return [];\n}\n\n// Normalizar formato\nconst normalizedMessage = {\n  from: body.from.replace('@c.us', ''),\n  body: body.body,\n  type: body.type || 'chat',\n  timestamp: body.timestamp || Date.now(),\n  id: body.id?.id || body.id,\n  hasMedia: body.hasMedia || false,\n  mediaData: body.mediaData || null,\n  author: body.author || body.from,\n  isGroupMsg: body.isGroupMsg || false,\n  chat: body.chat || { id: body.from }\n};\n\n// Normalizar texto para comparação\nnormalizedMessage.normalizedBody = body.body.toLowerCase()\n  .normalize(\"NFD\")\n  .replace(/[\\u0300-\\u036f]/g, \"\")\n  .trim();\n\nreturn [{ json: normalizedMessage }];"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "load-user-state",
+      "name": "📊 Carregar Estado",
+      "type": "n8n-nodes-base.function",
+      "position": [640, 400],
+      "parameters": {
+        "functionCode": "const userPhone = $json.from;\nconst messageBody = $json.normalizedBody;\nconst currentTime = Date.now();\nconst SESSION_TIMEOUT = 30 * 60 * 1000; // 30 minutos\n\n// Simular carregamento de estado (em produção use base de dados)\nlet userState = null;\n\n// Se não há estado ou usuário digitou 'oi', inicializar novo estado\nif (!userState || messageBody === 'oi') {\n  userState = {\n    step: 'awaiting_name',\n    data: {},\n    lastInteraction: currentTime,\n    sessionId: `session_${userPhone}_${currentTime}`\n  };\n}\n\n// Atualizar última interação\nuserState.lastInteraction = currentTime;\n\nreturn [{\n  json: {\n    ...userState,\n    userPhone: userPhone,\n    messageData: $json,\n    shouldGreet: !userState || messageBody === 'oi'\n  }\n}];"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "conversation-router",
+      "name": "🔀 Roteador de Conversa",
+      "type": "n8n-nodes-base.switch",
+      "position": [840, 400],
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "outputKey": "Saudação",
+              "conditions": {
+                "options": {
+                  "version": 2
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true"
+                    },
+                    "leftValue": "={{ $json.shouldGreet === true }}"
+                  }
+                ]
+              },
+              "renameOutput": true
+            },
+            {
+              "outputKey": "Nome",
+              "conditions": {
+                "options": {
+                  "version": 2
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "leftValue": "={{ $json.step }}",
+                    "rightValue": "awaiting_name"
+                  }
+                ]
+              },
+              "renameOutput": true
+            },
+            {
+              "outputKey": "Menu",
+              "conditions": {
+                "options": {
+                  "version": 2
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "leftValue": "={{ $json.step }}",
+                    "rightValue": "awaiting_main_option"
+                  }
+                ]
+              },
+              "renameOutput": true
+            },
+            {
+              "outputKey": "Produto",
+              "conditions": {
+                "options": {
+                  "version": 2
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    },
+                    "leftValue": "={{ $json.step }}",
+                    "rightValue": "product_issue"
+                  }
+                ]
+              },
+              "renameOutput": true
+            },
+            {
+              "outputKey": "Satisfação",
+              "conditions": {
+                "options": {
+                  "version": 2
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    },
+                    "leftValue": "={{ $json.step }}",
+                    "rightValue": "satisfaction"
+                  }
+                ]
+              },
+              "renameOutput": true
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra",
+          "renameFallbackOutput": "Outros"
+        }
+      },
+      "typeVersion": 3.2
+    },
+    {
+      "id": "send-welcome",
+      "name": "👋 Boas-vindas",
+      "type": "n8n-nodes-base.set",
+      "position": [1080, 200],
+      "parameters": {
+        "options": {},
+        "assignments": {
+          "assignments": [
+            {
+              "id": "response",
+              "name": "responseMessage",
+              "type": "string",
+              "value": "🏠 *Inaugura Lar - Atendimento Especializado* 🏠\\n\\nOlá! 👋 Seja bem-vindo(a) ao nosso canal de atendimento. Estamos aqui para resolver seu problema com agilidade e qualidade.\\n\\nPara iniciarmos o atendimento personalizado, por favor informe:\\n\\n*Nome completo:*"
+            },
+            {
+              "id": "step",
+              "name": "newStep",
+              "type": "string",
+              "value": "awaiting_name"
+            }
+          ]
+        }
+      },
+      "typeVersion": 3.4
+    },
+    {
+      "id": "process-name",
+      "name": "👤 Processar Nome",
+      "type": "n8n-nodes-base.function",
+      "position": [1080, 300],
+      "parameters": {
+        "functionCode": "const messageBody = $json.messageData.body;\nconst userPhone = $json.userPhone;\n\n// Validar nome (pelo menos duas palavras)\nconst nameParts = messageBody.trim().split(' ');\nif (nameParts.length < 2) {\n  return [{\n    json: {\n      responseMessage: '⚠️ Por favor, informe seu *nome completo* (pelo menos duas palavras) para prosseguirmos.',\n      newStep: 'awaiting_name',\n      userPhone: userPhone,\n      data: $json.data\n    }\n  }];\n}\n\n// Nome válido\nconst firstName = nameParts[0];\nconst fullName = messageBody.trim();\n\nreturn [{\n  json: {\n    responseMessage: `👋 Olá, *${firstName}*!\\n\\nComo podemos ajudar você hoje?\\n\\n*1*. 🛠️ Problema com produto\\n*2*. 🧾 Nota Fiscal\\n*3*. 👨‍💼 Falar com atendente\\n\\nResponda com o *número* ou *palavra-chave* da opção desejada.`,\n    newStep: 'awaiting_main_option',\n    userPhone: userPhone,\n    data: {\n      ...$json.data,\n      name: fullName,\n      firstName: firstName\n    }\n  }\n}];"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "process-menu",
+      "name": "📋 Processar Menu",
+      "type": "n8n-nodes-base.function",
+      "position": [1080, 400],
+      "parameters": {
+        "functionCode": "const messageBody = $json.messageData.normalizedBody;\nconst userPhone = $json.userPhone;\nconst userData = $json.data;\n\n// Mapeamento de palavras-chave\nconst keywordMapping = {\n  '1': 'product_issue',\n  'problema': 'product_issue',\n  'defeito': 'product_issue',\n  'quebrado': 'product_issue',\n  'suporte': 'product_issue',\n  '2': 'invoice',\n  'nota fiscal': 'invoice',\n  'nota': 'invoice',\n  'fatura': 'invoice',\n  'nf': 'invoice',\n  '3': 'support',\n  'atendente': 'support',\n  'humano': 'support',\n  'pessoa': 'support',\n  'falar': 'support'\n};\n\nconst action = keywordMapping[messageBody] || keywordMapping[messageBody.split(' ')[0]];\n\nlet response = {};\n\nif (action === 'product_issue') {\n  response = {\n    responseMessage: '📋 *Registro de Problema com Produto*\\n\\nPara agilizar seu atendimento, por favor envie:\\n\\n1️⃣ *Nota fiscal ou número do pedido*\\n(Você pode enviar uma foto da nota fiscal ou apenas digitar o número).',\n    newStep: 'product_issue_nf',\n    flowType: 'product_issue'\n  };\n} else if (action === 'invoice') {\n  response = {\n    responseMessage: \"🧾 A funcionalidade de 'Nota Fiscal' está em desenvolvimento. Por favor, escolha outra opção.\",\n    newStep: 'awaiting_main_option',\n    flowType: 'invoice_not_available'\n  };\n} else if (action === 'support') {\n  const queuePosition = Math.floor(Math.random() * 5) + 1;\n  response = {\n    responseMessage: `👨‍💼 *Solicitação de Atendimento*\\n\\nSua solicitação foi registrada com sucesso!\\n\\n⏳ *Todos os nossos atendentes estão ocupados no momento.*\\nVocê foi adicionado à fila de atendimento. Posição: *${queuePosition}*.\\n\\nAguarde, em breve um atendente estará com você!`,\n    newStep: 'transfer_to_human',\n    flowType: 'human_support',\n    queuePosition: queuePosition\n  };\n} else {\n  response = {\n    responseMessage: 'Opção inválida. Por favor, escolha uma das opções do menu.',\n    newStep: 'awaiting_main_option',\n    flowType: 'invalid_option'\n  };\n}\n\nreturn [{\n  json: {\n    ...response,\n    userPhone: userPhone,\n    data: userData\n  }\n}];"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "process-product",
+      "name": "🛠️ Problema Produto",
+      "type": "n8n-nodes-base.function",
+      "position": [1080, 500],
+      "parameters": {
+        "functionCode": "const step = $json.step;\nconst messageData = $json.messageData;\nconst userPhone = $json.userPhone;\nconst userData = $json.data;\n\nlet response = {};\n\nswitch (step) {\n  case 'product_issue_nf':\n    if (messageData.hasMedia) {\n      userData.invoice = `Imagem recebida - ${messageData.id}`;\n    } else {\n      userData.invoice = messageData.body;\n    }\n    response = {\n      responseMessage: '✅ *Nota fiscal recebida!*\\n\\nAgora, por favor, envie uma *foto clara do produto com problema*.',\n      newStep: 'product_issue_photo'\n    };\n    break;\n\n  case 'product_issue_photo':\n    if (!messageData.hasMedia) {\n      response = {\n        responseMessage: '⚠️ Por favor, envie uma *foto* para prosseguir.',\n        newStep: 'product_issue_photo'\n      };\n    } else {\n      userData.productPhoto = `Foto produto - ${messageData.id}`;\n      response = {\n        responseMessage: '✅ *Foto do produto recebida!*\\n\\nAgora, por favor, envie uma *foto da embalagem/caixa* do produto.',\n        newStep: 'product_issue_box_photo'\n      };\n    }\n    break;\n\n  case 'product_issue_box_photo':\n    if (!messageData.hasMedia) {\n      response = {\n        responseMessage: '⚠️ Por favor, envie uma *foto* para prosseguir.',\n        newStep: 'product_issue_box_photo'\n      };\n    } else {\n      userData.boxPhoto = `Foto embalagem - ${messageData.id}`;\n      response = {\n        responseMessage: '✅ *Foto da embalagem recebida!*\\n\\nPor último, envie uma *foto das etiquetas ou código de barras* do produto.',\n        newStep: 'product_issue_label_photo'\n      };\n    }\n    break;\n\n  case 'product_issue_label_photo':\n    if (!messageData.hasMedia) {\n      response = {\n        responseMessage: '⚠️ Por favor, envie uma *foto* para prosseguir.',\n        newStep: 'product_issue_label_photo'\n      };\n    } else {\n      userData.labelPhoto = `Foto etiquetas - ${messageData.id}`;\n      response = {\n        responseMessage: '✅ *Todas as informações foram recebidas com sucesso!*\\n\\n✏️ *Deseja adicionar alguma observação ou detalhe sobre o problema?*\\n\\nSe sim, por favor escreva agora. Se não, responda com *\"Não\"*.',\n        newStep: 'product_issue_comments'\n      };\n    }\n    break;\n\n  case 'product_issue_comments':\n    userData.comments = messageData.normalizedBody === 'nao' ? 'Nenhuma observação.' : messageData.body;\n    response = {\n      responseMessage: 'Obrigado! Sua solicitação foi registrada e nossa equipe de especialistas já está analisando o seu caso.\\n\\nEntraremos em contato neste mesmo número para dar continuidade.',\n      newStep: 'awaiting_satisfaction_rating',\n      ticketData: userData,\n      triggerSatisfaction: true\n    };\n    break;\n\n  default:\n    response = {\n      responseMessage: '⚠️ Ops! Ocorreu um problema. Vamos começar novamente.',\n      newStep: 'awaiting_name'\n    };\n}\n\nreturn [{\n  json: {\n    ...response,\n    userPhone: userPhone,\n    data: userData\n  }\n}];"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "process-satisfaction",
+      "name": "📊 Satisfação",
+      "type": "n8n-nodes-base.function",
+      "position": [1080, 600],
+      "parameters": {
+        "functionCode": "const step = $json.step;\nconst messageData = $json.messageData;\nconst userPhone = $json.userPhone;\nconst userData = $json.data;\n\nlet response = {};\n\nswitch (step) {\n  case 'awaiting_satisfaction_rating':\n    const rating = parseInt(messageData.body.trim());\n    if (isNaN(rating) || rating < 1 || rating > 5) {\n      response = {\n        responseMessage: '⚠️ Por favor, responda com um número de 1 a 5.',\n        newStep: 'awaiting_satisfaction_rating'\n      };\n    } else {\n      userData.rating = rating;\n      response = {\n        responseMessage: 'Obrigado pela sua avaliação! Para concluir, você poderia deixar um breve comentário sobre sua experiência?',\n        newStep: 'awaiting_satisfaction_feedback'\n      };\n    }\n    break;\n\n  case 'awaiting_satisfaction_feedback':\n    userData.feedback = messageData.body;\n    response = {\n      responseMessage: '🙏 *Muito obrigado pelo seu feedback!*\\n\\nSuas observações são muito valiosas. Tenha um ótimo dia!',\n      newStep: 'conversation_completed',\n      finalizeSession: true,\n      satisfactionData: {\n        rating: userData.rating,\n        feedback: userData.feedback,\n        timestamp: Date.now()\n      }\n    };\n    break;\n\n  default:\n    response = {\n      responseMessage: '📊 *Pesquisa de Satisfação*\\n\\nPara nos ajudar a melhorar, como você avalia este atendimento inicial?\\n\\nResponda com um número de 1 a 5:\\n1 - Muito Ruim 😠\\n2 - Ruim 🙁\\n3 - Regular 😐\\n4 - Bom 🙂\\n5 - Excelente 😄',\n      newStep: 'awaiting_satisfaction_rating'\n    };\n}\n\nreturn [{\n  json: {\n    ...response,\n    userPhone: userPhone,\n    data: userData\n  }\n}];"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "save-state",
+      "name": "💾 Salvar Estado",
+      "type": "n8n-nodes-base.function",
+      "position": [1320, 400],
+      "parameters": {
+        "functionCode": "const userPhone = $json.userPhone;\nconst newStep = $json.newStep;\nconst userData = $json.data || {};\nconst currentTime = Date.now();\n\n// Preparar novo estado\nconst newState = {\n  step: newStep,\n  data: userData,\n  lastInteraction: currentTime,\n  sessionId: $json.sessionId || `session_${userPhone}_${currentTime}`\n};\n\n// Se a sessão deve ser finalizada, não salvar estado\nif ($json.finalizeSession) {\n  newState.step = 'completed';\n}\n\n// Em produção, salvar no banco de dados aqui\nconsole.log(`[SAVE STATE] ${userPhone}: ${newStep}`);\n\nreturn [{\n  json: {\n    userPhone: userPhone,\n    userState: newState,\n    responseMessage: $json.responseMessage,\n    shouldDelete: $json.finalizeSession || false,\n    ticketData: $json.ticketData,\n    satisfactionData: $json.satisfactionData,\n    triggerSatisfaction: $json.triggerSatisfaction\n  }\n}];"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "send-response",
+      "name": "📱 Enviar Resposta",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [1520, 400],
+      "parameters": {
+        "url": "http://localhost:3002/api/send-message",
+        "method": "POST",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ {\n  \"chatId\": $json.userPhone + '@c.us',\n  \"message\": $json.responseMessage,\n  \"options\": {\n    \"linkPreview\": false\n  }\n} }}",
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          }
+        }
+      },
+      "typeVersion": 4.2
+    },
+    {
+      "id": "satisfaction-delay",
+      "name": "⏱️ Delay 5s",
+      "type": "n8n-nodes-base.wait",
+      "position": [1320, 600],
+      "parameters": {
+        "amount": 5,
+        "unit": "seconds"
+      },
+      "typeVersion": 1.1
+    },
+    {
+      "id": "send-satisfaction",
+      "name": "📊 Enviar Pesquisa",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [1520, 600],
+      "parameters": {
+        "url": "http://localhost:3002/api/send-message",
+        "method": "POST",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ {\n  \"chatId\": $json.userPhone + '@c.us',\n  \"message\": \"📊 *Pesquisa de Satisfação*\\n\\nPara nos ajudar a melhorar, como você avalia este atendimento inicial?\\n\\nResponda com um número de 1 a 5:\\n1 - Muito Ruim 😠\\n2 - Ruim 🙁\\n3 - Regular 😐\\n4 - Bom 🙂\\n5 - Excelente 😄\",\n  \"options\": {\n    \"linkPreview\": false\n  }\n} }}",
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          }
+        }
+      },
+      "typeVersion": 4.2
+    },
+    {
+      "id": "log-interaction",
+      "name": "📝 Log",
+      "type": "n8n-nodes-base.function",
+      "position": [1720, 400],
+      "parameters": {
+        "functionCode": "const userPhone = $json.userPhone;\nconst timestamp = new Date().toISOString();\nconst step = $json.userState?.step || 'unknown';\n\nconsole.log(`[${timestamp}] Usuário ${userPhone} - Passo: ${step}`);\n\nif ($json.ticketData) {\n  console.log(`[TICKET CRIADO] ${userPhone}:`, JSON.stringify($json.ticketData, null, 2));\n}\n\nif ($json.satisfactionData) {\n  console.log(`[PESQUISA CONCLUÍDA] ${userPhone}:`, JSON.stringify($json.satisfactionData, null, 2));\n}\n\nreturn [{ json: { success: true, timestamp: timestamp } }];"
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "webhook-response",
+      "name": "✅ Resposta",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "position": [1920, 400],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { \"success\": true, \"message\": \"Processado\", \"timestamp\": new Date().toISOString() } }}"
+      },
+      "typeVersion": 1.1
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "🔗 Webhook WhatsApp": {
+      "main": [
+        [
+          {
+            "node": "✅ Validar Mensagem",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "✅ Validar Mensagem": {
+      "main": [
+        [
+          {
+            "node": "📊 Carregar Estado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "📊 Carregar Estado": {
+      "main": [
+        [
+          {
+            "node": "🔀 Roteador de Conversa",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🔀 Roteador de Conversa": {
+      "main": [
+        [
+          {
+            "node": "👋 Boas-vindas",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "👤 Processar Nome",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "📋 Processar Menu",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "🛠️ Problema Produto",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "📊 Satisfação",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "👋 Boas-vindas": {
+      "main": [
+        [
+          {
+            "node": "💾 Salvar Estado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "👤 Processar Nome": {
+      "main": [
+        [
+          {
+            "node": "💾 Salvar Estado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "📋 Processar Menu": {
+      "main": [
+        [
+          {
+            "node": "💾 Salvar Estado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🛠️ Problema Produto": {
+      "main": [
+        [
+          {
+            "node": "💾 Salvar Estado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "📊 Satisfação": {
+      "main": [
+        [
+          {
+            "node": "💾 Salvar Estado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "💾 Salvar Estado": {
+      "main": [
+        [
+          {
+            "node": "📱 Enviar Resposta",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "⏱️ Delay 5s",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "📱 Enviar Resposta": {
+      "main": [
+        [
+          {
+            "node": "📝 Log",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "⏱️ Delay 5s": {
+      "main": [
+        [
+          {
+            "node": "📊 Enviar Pesquisa",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "📝 Log": {
+      "main": [
+        [
+          {
+            "node": "✅ Resposta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-06-20T12:00:00.000Z",
+      "updatedAt": "2025-06-20T12:00:00.000Z",
+      "id": "inaugura-lar-bot",
+      "name": "Inaugura Lar Bot"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2025-06-20T12:00:00.000Z",
+  "versionId": "v1.0.0"
+}

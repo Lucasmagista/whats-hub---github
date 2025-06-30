@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  # Servidor WhatsApp Web.js
+  whatsapp-server:
+    build: .
+    container_name: whatsapp-webjs-server
+    ports:
+      - "3001:3001"
+    environment:
+      - PORT=3001
+      - N8N_WEBHOOK_URL=http://localhost:5678/webhook/whatsapp-messages
+    volumes:
+      - ./sessions:/app/sessions
+      - ./logs:/app/logs
+    restart: unless-stopped
+    depends_on:
+      - n8n
+    networks:
+      - whatsapp-network
+
+  # n8n Workflow Automation
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n
+    ports:
+      - "5678:5678"
+    environment:
+      - GENERIC_TIMEZONE=America/Sao_Paulo
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=admin
+      - N8N_BASIC_AUTH_PASSWORD=password123
+      - WEBHOOK_URL=http://localhost:5678/
+    volumes:
+      - n8n_data:/home/node/.n8n
+      - ./n8n-workflows:/home/node/.n8n/workflows
+    restart: unless-stopped
+    networks:
+      - whatsapp-network
+
+  # PostgreSQL Database (Opcional - para n8n)
+  postgres:
+    image: postgres:15-alpine
+    container_name: postgres-n8n
+    environment:
+      - POSTGRES_DB=n8n
+      - POSTGRES_USER=n8n
+      - POSTGRES_PASSWORD=n8n123
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    networks:
+      - whatsapp-network
+
+volumes:
+  n8n_data:
+    driver: local
+  postgres_data:
+    driver: local
+
+networks:
+  whatsapp-network:
+    driver: bridge
