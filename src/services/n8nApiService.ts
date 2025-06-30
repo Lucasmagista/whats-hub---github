@@ -5,7 +5,7 @@
 
 // Environment Variables
 const N8N_WEBHOOK_URL = import.meta.env.VITE_N8N_WEBHOOK_URL || 'http://localhost:5678/webhook/whatsapp-messages';
-const POSTGRES_URL = import.meta.env.VITE_POSTGRES_URL || 'postgresql://postgres:postgres@localhost:5432/whats_hub';
+const POSTGRES_URL = import.meta.env.VITE_POSTGRES_URL || 'postgresql://usuario:senha@localhost:5432/whats_hub';
 const WHATSAPP_SERVER_URL = import.meta.env.VITE_WHATSAPP_SERVER_URL || 'http://localhost:3001';
 const DASHBOARD_URL = import.meta.env.VITE_DASHBOARD_URL || 'http://localhost:5173';
 
@@ -320,7 +320,7 @@ class N8nApiService {
     try {
       return await fetch('http://localhost:5678/api/v1/workflows', {
         headers: {
-          'Authorization': 'Basic ' + btoa('admin:password123'),
+          'Authorization': 'Basic ' + btoa(`${import.meta.env.VITE_N8N_USERNAME || 'admin'}:${import.meta.env.VITE_N8N_PASSWORD || 'sua_senha_aqui'}`),
         },
       }).then(res => res.json());
     } catch (error) {
@@ -522,7 +522,7 @@ export class WhatsHubN8nIntegration {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Basic ' + btoa('admin:password123'),
+          'Authorization': 'Basic ' + btoa(`${import.meta.env.VITE_N8N_USERNAME || 'admin'}:${import.meta.env.VITE_N8N_PASSWORD || 'sua_senha_aqui'}`),
         },
         body: JSON.stringify(webhookData),
       });
@@ -616,7 +616,7 @@ export class WhatsHubN8nIntegration {
     try {
       const response = await fetch(`${this.n8nUrl}/api/v1/executions?workflowId=${workflowId}&limit=${limit}`, {
         headers: {
-          'Authorization': 'Basic ' + btoa('admin:password123'),
+          'Authorization': 'Basic ' + btoa(`${import.meta.env.VITE_N8N_USERNAME || 'admin'}:${import.meta.env.VITE_N8N_PASSWORD || 'sua_senha_aqui'}`),
         }
       });
 

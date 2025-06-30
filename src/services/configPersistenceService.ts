@@ -426,7 +426,7 @@ export const ENDPOINTS = {
       VITE_N8N_WEBHOOK_URL: config.n8n.webhookUrl,
       VITE_N8N_API_URL: config.n8n.apiUrl || 'http://localhost:5678/api/v1',
       VITE_N8N_USERNAME: config.n8n.username || 'admin',
-      VITE_N8N_PASSWORD: config.n8n.password || 'password123',
+      VITE_N8N_PASSWORD: config.n8n.password || 'sua_senha_n8n_aqui',
       
       // WhatsApp
       VITE_WHATSAPP_SERVER_URL: config.whatsapp.serverUrl || 'http://localhost:3002',
@@ -458,7 +458,7 @@ export const ENDPOINTS = {
    */
   private buildDatabaseUrl(config: SystemConfiguration): string {
     const db = config.database;
-    if (!db) return 'postgresql://postgres:postgres@localhost:5432/whats_hub';
+    if (!db) return 'postgresql://usuario:senha@localhost:5432/whats_hub';
     
     return `postgresql://${db.username}:${db.password}@${db.host}:${db.port}/${db.database}`;
   }

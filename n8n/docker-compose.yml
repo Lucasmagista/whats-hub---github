@@ -29,7 +29,7 @@ services:
       - GENERIC_TIMEZONE=America/Sao_Paulo
       - N8N_BASIC_AUTH_ACTIVE=true
       - N8N_BASIC_AUTH_USER=admin
-      - N8N_BASIC_AUTH_PASSWORD=password123
+      - N8N_BASIC_AUTH_PASSWORD=sua_senha_n8n_aqui
       - WEBHOOK_URL=http://localhost:5678/
     volumes:
       - n8n_data:/home/node/.n8n

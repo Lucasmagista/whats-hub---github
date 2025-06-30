@@ -330,7 +330,7 @@ whats-hub/
 <td>
 
 - 📊 [`DASHBOARD_ELEMENTOS.md`](docs/DASHBOARD_ELEMENTOS.md)
-- 🎨 [`DASHBOARD_MELHORADA.MD`](docs/DASHBOARD_MELHORADA.MD)
+- 🎨 [`DASHBOARD_MELHORADA.md`](docs/DASHBOARD_MELHORADA.md)
 - 🖼️ [`UI_COMPONENTS.md`](docs/UI_COMPONENTS.md)
 - 🎯 [`UX_GUIDELINES.md`](docs/UX_GUIDELINES.md)
 
@@ -556,23 +556,36 @@ npm run security-check   # Auditoria de segurança
 
 ---
 
-## 📄 Licença
+## 📄 Licença & Direitos
 
 <div align="center">
 
-Este projeto está licenciado sob a **Licença MIT**.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Consulte o arquivo [LICENSE](LICENSE) para mais detalhes.
 
 **✅ Você pode:**
-- ✨ Usar comercialmente
-- 🔄 Modificar o código
-- 📦 Distribuir
-- 🔒 Uso privado
+- 💼 **Uso comercial**: Utilize em projetos comerciais com algumas restrições
+- 🔄 **Modificar**: Adapte e personalize conforme suas necessidades
+- 📦 **Distribuir**: Compartilhe com sua equipe ou comunidade
+- 🔒 **Uso privado**: Mantenha suas modificações privadas
+- 🏗️ **Criar derivados**: Desenvolva projetos baseados neste código
+- 📋 **Incluir em produtos**: Integre em suas soluções comerciais
 
 **❌ Limitações:**
-- 🛡️ Sem garantia
-- 🚫 Sem responsabilidade
+- 🛡️ **Sem garantia**: Software fornecido "como está", sem garantias
+- 🚫 **Sem responsabilidade**: Autores não são responsáveis por problemas
+- 📝 **Créditos obrigatórios**: Mantenha os créditos originais nos arquivos
+- ⚖️ **Conformidade legal**: Respeite leis locais de software
+
+**🤝 Boas Práticas:**
+- 🌟 **Contribua de volta**: Compartilhe melhorias com a comunidade
+- 🐛 **Reporte problemas**: Ajude a melhorar o projeto
+- 📚 **Documente mudanças**: Mantenha histórico de modificações
+- 🔄 **Mantenha atualizado**: Acompanhe as atualizações do projeto original
+
+**⚖️ Resumo Legal:**
+Este projeto está licenciado sob a licença MIT, uma das mais permissivas do mundo open source. Isso significa máxima liberdade para uso, com mínimas restrições. Você pode usar este código em qualquer projeto, incluindo produtos comerciais, desde que mantenha o aviso de copyright original.
 
 </div>
 
@@ -585,44 +598,258 @@ Consulte o arquivo [LICENSE](LICENSE) para mais detalhes.
 <table>
 <tr>
 <td align="center">
-<img src="https://github.com/lovable.png" width="100px;" alt="Lovable"/><br>
-<strong>Lovable</strong><br>
+<img src="https://avatars.githubusercontent.com/u/71129813?v=4" width="100px;" alt="Lucas"/><br>
+<strong>Lucas Magista</strong><br>
 <sub>Criador Principal</sub>
-</td>
-<td align="center">
-<img src="https://github.com/github.png" width="100px;" alt="Você"/><br>
-<strong>Você?</strong><br>
-<sub>Próximo Colaborador</sub>
 </td>
 </tr>
 </table>
 
 **🌟 Hall da Fama dos Contribuidores**
 
-[![Contribuidores](https://contrib.rocks/image?repo=seu-usuario/whats-hub)](https://github.com/seu-usuario/whats-hub/graphs/contributors)
-
----
-
-## 💝 Agradecimentos
-
-Feito com ❤️ por [Lovable](https://lovable.dev) e nossa incrível comunidade.
-
-**Tecnologias que tornaram este projeto possível:**
-- ⚛️ [React](https://reactjs.org/) - A biblioteca que mudou tudo
-- 📘 [TypeScript](https://www.typescriptlang.org/) - JavaScript que escala
-- 🎨 [Tailwind CSS](https://tailwindcss.com/) - CSS utilitário
-- ⚡ [Vite](https://vitejs.dev/) - Build tool do futuro
+</div>
 
 ---
 
 <div align="center">
-<img src="https://img.shields.io/github/stars/seu-usuario/whats-hub?style=social" alt="GitHub stars">
-<img src="https://img.shields.io/github/forks/seu-usuario/whats-hub?style=social" alt="GitHub forks">
-<img src="https://img.shields.io/github/watchers/seu-usuario/whats-hub?style=social" alt="GitHub watchers">
+
+## 💝 Agradecimentos & Apoio
+
+<br>
+
+**Feito com ❤️ e muito ☕ por [Japaxr](https://lucasmagista.carrd.co/)**
+
+*Transformando ideias em soluções reais para a comunidade*
+
+<br>
+
+### 🌟 Apoie o Projeto
+
+<table align="center">
+<tr>
+<td align="center">
+<a href="https://github.com/seu-usuario/whats-hub/stargazers">
+<img src="https://img.shields.io/github/stars/seu-usuario/whats-hub?style=for-the-badge&logo=github&logoColor=white&color=yellow" alt="GitHub stars">
+</a>
+<br><sub>⭐ <strong>Star no GitHub</strong></sub>
+</td>
+<td align="center">
+<a href="https://github.com/seu-usuario/whats-hub/network/members">
+<img src="https://img.shields.io/github/forks/seu-usuario/whats-hub?style=for-the-badge&logo=github&logoColor=white&color=blue" alt="GitHub forks">
+</a>
+<br><sub>🍴 <strong>Fork o Projeto</strong></sub>
+</td>
+<td align="center">
+<a href="https://github.com/seu-usuario/whats-hub/issues">
+<img src="https://img.shields.io/github/issues/seu-usuario/whats-hub?style=for-the-badge&logo=github&logoColor=white&color=red" alt="GitHub issues">
+</a>
+<br><sub>🐛 <strong>Reporte Issues</strong></sub>
+</td>
+<td align="center">
+<a href="https://github.com/seu-usuario/whats-hub/pulls">
+<img src="https://img.shields.io/github/issues-pr/seu-usuario/whats-hub?style=for-the-badge&logo=github&logoColor=white&color=green" alt="GitHub PRs">
+</a>
+<br><sub>🔄 <strong>Contribua</strong></sub>
+</td>
+</tr>
+</table>
+
+<br>
+
+### 🏆 Tecnologias que Tornaram Tudo Possível
+
+<table align="center">
+<tr>
+<td align="center" width="20%">
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" width="60" height="60" alt="React"/>
+<br><strong>React 18</strong>
+<br><sub>🚀 A biblioteca que revolucionou o frontend</sub>
+</td>
+<td align="center" width="20%">
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" width="60" height="60" alt="TypeScript"/>
+<br><strong>TypeScript</strong>
+<br><sub>🛡️ JavaScript que escala com segurança</sub>
+</td>
+<td align="center" width="20%">
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg" width="60" height="60" alt="Tailwind CSS"/>
+<br><strong>Tailwind CSS</strong>
+<br><sub>🎨 CSS utilitário que acelera o desenvolvimento</sub>
+</td>
+<td align="center" width="20%">
+<img src="https://vitejs.dev/logo.svg" width="60" height="60" alt="Vite"/>
+<br><strong>Vite</strong>
+<br><sub>⚡ Build tool ultra-rápida</sub>
+</td>
+<td align="center" width="20%">
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" width="60" height="60" alt="Node.js"/>
+<br><strong>Node.js</strong>
+<br><sub>🌐 Runtime JavaScript poderoso</sub>
+</td>
+</tr>
+</table>
+
+<br>
+
+### 🎯 Ferramentas que Fazem a Diferença
+
+<table align="center">
+<tr>
+<td align="center" width="16.66%">
+<img src="https://zustand-demo.pmnd.rs/logo.svg" width="48" height="48" alt="Zustand"/>
+<br><strong>Zustand</strong>
+<br><sub>Estado global simples</sub>
+</td>
+<td align="center" width="16.66%">
+<img src="https://recharts.org/statics/logo.svg" width="48" height="48" alt="Recharts"/>
+<br><strong>Recharts</strong>
+<br><sub>Gráficos interativos</sub>
+</td>
+<td align="center" width="16.66%">
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" width="48" height="48" alt="Docker"/>
+<br><strong>Docker</strong>
+<br><sub>Containerização</sub>
+</td>
+<td align="center" width="16.66%">
+<img src="https://vitest.dev/logo.svg" width="48" height="48" alt="Vitest"/>
+<br><strong>Vitest</strong>
+<br><sub>Testes modernos</sub>
+</td>
+<td align="center" width="16.66%">
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" width="48" height="48" alt="Git"/>
+<br><strong>Git</strong>
+<br><sub>Controle de versão</sub>
+</td>
+<td align="center" width="16.66%">
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" width="48" height="48" alt="VS Code"/>
+<br><strong>VS Code</strong>
+<br><sub>Editor favorito</sub>
+</td>
+</tr>
+</table>
+
+<br>
+
+### 🌍 Comunidade e Inspiração
+
+<table align="center">
+<tr>
+<td align="center">
+<img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" width="48" height="48" alt="GitHub"/>
+<br><strong>GitHub</strong>
+<br><sub>🏠 Nossa casa</sub>
+</td>
+<td align="center">
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/stackoverflow/stackoverflow-original.svg" width="48" height="48" alt="Stack Overflow"/>
+<br><strong>Stack Overflow</strong>
+<br><sub>🤔 Solucionando dúvidas</sub>
+</td>
+<td align="center">
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/npm/npm-original-wordmark.svg" width="48" height="48" alt="npm"/>
+<br><strong>npm</strong>
+<br><sub>📦 Ecossistema incrível</sub>
+</td>
+<td align="center">
+<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/opensource/opensource-original.svg" width="48" height="48" alt="Open Source"/>
+<br><strong>Open Source</strong>
+<br><sub>💝 Espírito colaborativo</sub>
+</td>
+</tr>
+</table>
+
+<br>
+
+### 💖 Formas de Apoiar
+
+<table align="center">
+<tr>
+<td align="center" width="25%">
+<strong>⭐ Star o Projeto</strong>
+<br><sub>Ajuda na visibilidade</sub>
+</td>
+<td align="center" width="25%">
+<strong>🐛 Reporte Bugs</strong>
+<br><sub>Melhore a qualidade</sub>
+</td>
+<td align="center" width="25%">
+<strong>💡 Sugira Features</strong>
+<br><sub>Compartilhe ideias</sub>
+</td>
+<td align="center" width="25%">
+<strong>🔄 Contribua</strong>
+<br><sub>Faça parte da equipe</sub>
+</td>
+</tr>
+<tr>
+<td align="center" width="25%">
+<strong>📢 Divulgue</strong>
+<br><sub>Espalhe a palavra</sub>
+</td>
+<td align="center" width="25%">
+<strong>📝 Documente</strong>
+<br><sub>Ajude outros devs</sub>
+</td>
+<td align="center" width="25%">
+<strong>🧪 Teste</strong>
+<br><sub>Garanta a qualidade</sub>
+</td>
+<td align="center" width="25%">
+<strong>☕ Café Virtual</strong>
+<br><sub>Apoio financeiro</sub>
+</td>
+</tr>
+</table>
+
+<br>
+
+### 🎉 Agradecimentos Especiais
+
+<blockquote>
+<p align="center">
+<em>"Este projeto não seria possível sem a incrível comunidade open source.<br>
+Cada linha de código, cada feedback, cada estrela ⭐ faz a diferença.<br>
+Obrigado por fazer parte desta jornada!"</em>
+</p>
+</blockquote>
+
+<table align="center">
+<tr>
+<td align="center">
+<strong>👥 Aos Contribuidores</strong>
+<br><sub>Que dedicam tempo e talento</sub>
+</td>
+<td align="center">
+<strong>🐛 Aos Testadores</strong>
+<br><sub>Que encontram e reportam problemas</sub>
+</td>
+<td align="center">
+<strong>💡 Aos Idealizadores</strong>
+<br><sub>Que sugerem melhorias</sub>
+</td>
+</tr>
+<tr>
+<td align="center">
+<strong>📚 Aos Documentadores</strong>
+<br><sub>Que compartilham conhecimento</sub>
+</td>
+<td align="center">
+<strong>🌟 Aos Early Adopters</strong>
+<br><sub>Que acreditaram no projeto</sub>
+</td>
+<td align="center">
+<strong>❤️ À Comunidade</strong>
+<br><sub>Que torna tudo possível</sub>
+</td>
+</tr>
+</table>
+
+<br>
+
+---
+
+<div align="center">
+<strong>🚀 "O futuro é construído por quem ousa começar hoje" 🚀</strong>
+<br><br>
+<sub>© 2024 Whats Hub - Transformando comunicação, uma mensagem por vez.</sub>
 </div>
-
-**⭐ Se este projeto foi útil para você, considere deixar uma estrela!**
-
-**🚀 Transforme seu atendimento hoje mesmo!**
 
 </div>

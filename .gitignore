@@ -12,6 +12,34 @@ dist
 dist-ssr
 *.local
 
+# Environment variables - SECURITY
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*/.env
+*/*/env
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+prisma/dev.db
+
+# Security files
+*.key
+*.pem
+*.p12
+*.pfx
+secrets/
+config/production.json
+
+# Session storage
+sessions/
+*.session
+user-states.json
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -22,3 +50,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# OS generated files
+Thumbs.db
+.DS_Store
+
+# Runtime files  
+*.lock
+.lock

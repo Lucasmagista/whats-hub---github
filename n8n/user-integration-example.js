@@ -49,7 +49,7 @@ app.post('/api/support-queue/register-attendant',
 // POST http://localhost:3001/api/auth/login
 // {
 //   "username": "admin",
-//   "password": "admin123"
+//   "password": "sua_senha_admin_segura"
 // }
 
 // 2. Usar o token retornado nas próximas requisições
@@ -64,7 +64,7 @@ app.post('/api/support-queue/register-attendant',
 // Authorization: Bearer SEU_TOKEN_AQUI
 // {
 //   "username": "carlos",
-//   "password": "carlos123",
+//   "password": "senha_segura_carlos",
 //   "role": "attendant"
 // }
 
@@ -185,7 +185,7 @@ console.log(`
 🎯 SISTEMA DE USUÁRIOS CONFIGURADO!
 
 📋 Usuários disponíveis (definidos no .env):
-• admin:admin123:admin - Administrador total
+• admin:sua_senha_admin_segura:admin - Administrador total
 • lucas:lucas123:admin - Seu usuário admin
 • maria:maria123:supervisor - Supervisora
 • joao:joao123:attendant - Atendente  

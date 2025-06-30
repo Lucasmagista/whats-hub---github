@@ -13,7 +13,7 @@ const OrderItemModel = require('./orderItem');
 const CustomerModel = require('./customer');
 const PaymentProofModel = require('./paymentProof');
 
-const sequelize = new Sequelize(process.env.DATABASE_URL || 'postgres://postgres:postgres@localhost:5432/catalog', {
+const sequelize = new Sequelize(process.env.DATABASE_URL || 'postgres://usuario:senha@localhost:5432/catalog', {
   dialect: 'postgres',
   logging: false,
 });

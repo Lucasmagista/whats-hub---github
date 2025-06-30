@@ -94,7 +94,7 @@ docker run -p 3001:3001 inaugura-lar-bot
 1. **Acessar n8n:**
    - URL: http://localhost:5678
    - Usuário: admin
-   - Senha: password123
+   - Senha: sua_senha_n8n_aqui
 
 2. **Importar template:**
    - Importar: `template-inaugura-lar-bot.json`

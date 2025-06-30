@@ -547,7 +547,7 @@ class ConfigurationManager {
         webhookUrl: import.meta.env.VITE_N8N_WEBHOOK_URL ?? 'http://localhost:5678/webhook/whatsapp-messages',
         apiUrl: import.meta.env.VITE_N8N_API_URL ?? 'http://localhost:5678/api/v1',
         username: import.meta.env.VITE_N8N_USERNAME ?? 'admin',
-        password: import.meta.env.VITE_N8N_PASSWORD ?? 'password123',
+        password: import.meta.env.VITE_N8N_PASSWORD ?? 'sua_senha_n8n_aqui',
         defaultWorkflow: 'whatsapp-automation',
         timeout: 30000,
         retryAttempts: 3

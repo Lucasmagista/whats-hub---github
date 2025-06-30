@@ -10,8 +10,8 @@ export default function AdminLogin() {
   function handleLogin(e) {
     e.preventDefault();
     setErro('');
-    // Simples: usuário admin, senha admin123 (troque para produção!)
-    if (usuario === 'admin' && senha === 'admin123') {
+    // Simples: usuário admin, senha sua_senha_segura (troque para produção!)
+    if (usuario === 'admin' && senha === 'sua_senha_segura') {
       localStorage.setItem('admin_auth', 'true');
       router.push('/admin');
     } else {

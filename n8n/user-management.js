@@ -86,7 +86,7 @@ class UserManager {
     }
 
     createDefaultAdmin() {
-        const defaultPassword = bcrypt.hashSync('admin123', 10);
+        const defaultPassword = bcrypt.hashSync('sua_senha_admin_segura', 10);
         const adminUser = {
             id: this.generateId(),
             username: 'admin',
@@ -97,7 +97,7 @@ class UserManager {
             active: true
         };
         this.users.set('admin', adminUser);
-        console.log('✅ Usuário admin padrão criado (username: admin, password: admin123)');
+        console.log('✅ Usuário admin padrão criado (username: admin, password: sua_senha_admin_segura)');
     }
 
     saveUsers() {
@@ -182,7 +182,7 @@ class UserManager {
 
     verifyToken(token) {
         try {
-            const decoded = jwt.verify(token, process.env.JWT_SECRET || 'default-secret');
+            const decoded = jwt.verify(token, process.env.JWT_SECRET || 'sua-chave-jwt-segura');
             const session = this.sessions.get(token);
             if (!session) {
                 return { valid: false, message: 'Sessão não encontrada' };
@@ -362,7 +362,7 @@ class UserManager {
     generateToken(user) {
         return jwt.sign(
             { id: user.id, username: user.username, role: user.role },
-            process.env.JWT_SECRET || 'default-secret',
+            process.env.JWT_SECRET || 'sua-chave-jwt-segura',
             { expiresIn: '24h' }
         );
     }
